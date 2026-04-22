@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { heroSlides } from "../../data/mock";
+import { heroSlides, DONATION_URL } from "../../data/mock";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 
 const Hero = () => {
@@ -39,8 +39,8 @@ const Hero = () => {
               <a href={slide.link} className="inline-flex items-center gap-2 bg-white text-[#0b2c4a] px-6 py-3 font-semibold hover:bg-[#009EDB] hover:text-white transition-colors">
                 {slide.cta} <ArrowRight className="w-4 h-4" />
               </a>
-              <a href="#donate" className="inline-flex items-center gap-2 border border-white text-white px-6 py-3 font-semibold hover:bg-white hover:text-[#0b2c4a] transition-colors">
-                Donate Now
+              <a href={DONATION_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 border border-white text-white px-6 py-3 font-semibold hover:bg-white hover:text-[#0b2c4a] transition-colors">
+                Partner With Us
               </a>
             </div>
           </div>

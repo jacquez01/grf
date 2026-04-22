@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { contactInfo, siteInfo, navItems, LOGO_URL, CHARITY_ID } from "../../data/mock";
+import { contactInfo, siteInfo, navItems, LOGO_URL, CHARITY_ID, socialLinks } from "../../data/mock";
 import { Facebook, Twitter, Instagram, Youtube, Linkedin } from "lucide-react";
 
 const Footer = () => {
@@ -17,9 +17,15 @@ const Footer = () => {
           </div>
           <p className="mt-5 text-sm text-white/70 leading-relaxed">{siteInfo.tagline}</p>
           <div className="mt-6 flex items-center gap-2">
-            {[Facebook, Twitter, Instagram, Youtube, Linkedin].map((I, i) => (
-              <a key={i} href="#" className="w-9 h-9 border border-white/25 hover:bg-[#009EDB] hover:border-[#009EDB] flex items-center justify-center" aria-label="social">
-                <I className="w-4 h-4" />
+            {[
+              { Icon: Facebook, href: socialLinks.facebook, label: "Facebook" },
+              { Icon: Twitter, href: socialLinks.twitter, label: "Twitter" },
+              { Icon: Instagram, href: socialLinks.instagram, label: "Instagram" },
+              { Icon: Youtube, href: socialLinks.youtube, label: "YouTube" },
+              { Icon: Linkedin, href: socialLinks.linkedin, label: "LinkedIn" }
+            ].map(({ Icon, href, label }) => (
+              <a key={label} href={href} target="_blank" rel="noreferrer" className="w-9 h-9 border border-white/25 hover:bg-[#009EDB] hover:border-[#009EDB] flex items-center justify-center" aria-label={label}>
+                <Icon className="w-4 h-4" />
               </a>
             ))}
           </div>
@@ -48,9 +54,9 @@ const Footer = () => {
         </div>
       </div>
       <div className="border-t border-white/10 bg-[#061a2c]">
-        <div className="max-w-[1400px] mx-auto px-6 py-6 text-center">
-          <div className="text-[11px] tracking-[0.25em] uppercase text-[#7cc3ef] font-semibold">Registered Charity</div>
-          <div className="mt-2 font-serif text-[15px] md:text-[16px] text-white/90 leading-relaxed">
+        <div className="max-w-[1400px] mx-auto px-6 py-3 text-center">
+          <div className="text-[10px] tracking-[0.22em] uppercase text-[#7cc3ef]/80 font-semibold">Registered Charity</div>
+          <div className="mt-1 text-[11px] md:text-[12px] text-white/70 leading-relaxed">
             {CHARITY_ID}
           </div>
         </div>

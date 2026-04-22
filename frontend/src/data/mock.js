@@ -203,7 +203,7 @@ export const partners = [
 export const LOGO_URL = "https://customer-assets.emergentagent.com/job_agrf-global-bridge/artifacts/vs4dhuee_cropped_circle_image%20%2810%29.png";
 
 export const whereWeWork = [
-  { region: "United States", flag: "US", blurb: "Active in New York, New Jersey, Maryland and across the United States — housing, healthcare, youth, crisis response and community leadership.", image: "https://images.pexels.com/photos/8423008/pexels-photo-8423008.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+  { region: "United States", flag: "US", blurb: "Active in Washington D.C., New York, New Jersey, Maryland and across the United States — housing, healthcare, youth, crisis response and community leadership.", image: "https://images.unsplash.com/photo-1677470560561-c5ba18d38f6e?crop=entropy&cs=srgb&fm=jpg&q=85" },
   { region: "Canada", flag: "CA", blurb: "Cross-border cultural exchanges, newcomer integration and skilled-worker apprenticeships.", image: "https://images.pexels.com/photos/36729916/pexels-photo-36729916.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
   { region: "Europe", flag: "EU", blurb: "Heritage protection, migration dialogue and intercultural policy with partners in Italy, Germany, Netherlands and Switzerland.", image: "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?crop=entropy&cs=srgb&fm=jpg&q=85" },
   { region: "Africa", flag: "AF", blurb: "Clean water, biodiversity, entrepreneurship and youth empowerment across Sub-Saharan communities.", image: "https://images.pexels.com/photos/28101461/pexels-photo-28101461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" }
@@ -385,5 +385,15 @@ export const youthCenter = {
     { name: "Additional Regions", note: "Planned expansion worldwide", country: "Global" }
   ]
 };
+
+export const socialLinks = {
+  instagram: "https://www.instagram.com/globerelationfoundation?igsh=MWFnOXVnNzFnc3l1aA==",
+  facebook: "https://www.facebook.com/share/17Z5m9aJP9/",
+  twitter: "#",
+  youtube: "#",
+  linkedin: "#"
+};
+
+export const DONATION_URL = "https://www.paypal.com/donate/?hosted_button_id=UGWUFLRFJ54ZG";
 
 export const CHARITY_ID = "AMERICA GLOBAL RELATIONS FOUNDATION: A USA REGISTERED CHARITY CORPORATION — 0451160952";

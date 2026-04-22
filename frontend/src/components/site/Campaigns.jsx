@@ -1,5 +1,5 @@
 import React from "react";
-import { featuredPrograms, newsPosts } from "../../data/mock";
+import { featuredPrograms, newsPosts, DONATION_URL } from "../../data/mock";
 import { ArrowRight } from "lucide-react";
 import { Progress } from "../ui/progress";
 
@@ -12,7 +12,7 @@ const Campaigns = () => {
             <div className="text-[11px] tracking-[0.25em] uppercase text-[#009EDB] font-semibold">Campaigns & Projects</div>
             <h2 className="font-serif text-3xl md:text-5xl text-[#0b2c4a] mt-2 max-w-2xl">Support what moves you most</h2>
           </div>
-          <a href="#donate" className="inline-flex items-center gap-2 text-[#009EDB] font-semibold hover:gap-3 transition-all">View all campaigns <ArrowRight className="w-4 h-4" /></a>
+          <a href={DONATION_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-[#009EDB] font-semibold hover:gap-3 transition-all">Partner with us <ArrowRight className="w-4 h-4" /></a>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -39,7 +39,7 @@ const Campaigns = () => {
                   ) : (
                     <div className="mt-4 text-[11px] tracking-wide uppercase text-slate-400">Status: {p.end}</div>
                   )}
-                  <a href="#donate" className="mt-5 inline-flex items-center gap-2 text-[#009EDB] font-semibold text-sm hover:gap-3 transition-all">Support this <ArrowRight className="w-4 h-4" /></a>
+                  <a href={DONATION_URL} target="_blank" rel="noreferrer" className="mt-5 inline-flex items-center gap-2 text-[#009EDB] font-semibold text-sm hover:gap-3 transition-all">Partner on this <ArrowRight className="w-4 h-4" /></a>
                 </div>
               </article>
             );

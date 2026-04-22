@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { navItems, LOGO_URL } from "../../data/mock";
+import { navItems, LOGO_URL, DONATION_URL } from "../../data/mock";
 import { Button } from "../ui/button";
 
 const Logo = () => (
@@ -78,7 +78,7 @@ const Header = () => {
             <NavLink anchor="#get-involved">Volunteer</NavLink>
           </Button>
           <Button className="bg-[#009EDB] hover:bg-[#0086b8] text-white rounded-none h-10 font-semibold" asChild>
-            <NavLink anchor="#donate">Donate</NavLink>
+            <a href={DONATION_URL} target="_blank" rel="noreferrer">Partner</a>
           </Button>
         </div>
         <button className="lg:hidden text-[#0b2c4a]" onClick={() => setOpen(!open)} aria-label="menu">
@@ -95,7 +95,7 @@ const Header = () => {
             ))}
             <div className="flex gap-2 pt-3">
               <Button variant="outline" className="flex-1 rounded-none border-[#009EDB] text-[#009EDB]" asChild><NavLink anchor="#get-involved">Volunteer</NavLink></Button>
-              <Button className="flex-1 rounded-none bg-[#009EDB] text-white" asChild><NavLink anchor="#donate">Donate</NavLink></Button>
+              <Button className="flex-1 rounded-none bg-[#009EDB] text-white" asChild><a href={DONATION_URL} target="_blank" rel="noreferrer">Partner</a></Button>
             </div>
           </div>
         </div>
