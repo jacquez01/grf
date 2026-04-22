@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { navItems } from "../../data/mock";
+import { navItems, LOGO_URL } from "../../data/mock";
 import { Button } from "../ui/button";
 
 const Logo = () => (
   <a href="#top" className="flex items-center gap-3 group">
-    <div className="w-11 h-11 rounded-full bg-[#009EDB] flex items-center justify-center shadow-sm ring-2 ring-[#009EDB]/20">
-      <svg viewBox="0 0 64 64" className="w-7 h-7 text-white" fill="none" stroke="currentColor" strokeWidth="2">
-        <circle cx="32" cy="32" r="26" />
-        <ellipse cx="32" cy="32" rx="13" ry="26" />
-        <path d="M6 32h52M10 18h44M10 46h44" />
-      </svg>
-    </div>
+    <img src={LOGO_URL} alt="Global Relations Foundation" className="w-12 h-12 object-contain bg-[#0b2c4a] rounded-full p-1 ring-2 ring-[#009EDB]/20" />
     <div className="leading-tight">
       <div className="text-[11px] tracking-[0.22em] uppercase text-[#0b2c4a]/70 font-semibold">America</div>
       <div className="text-[17px] md:text-[19px] font-serif font-semibold text-[#0b2c4a]">Global Relations Foundation</div>

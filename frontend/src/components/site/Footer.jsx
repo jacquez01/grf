@@ -1,5 +1,5 @@
 import React from "react";
-import { contactInfo, siteInfo, navItems } from "../../data/mock";
+import { contactInfo, siteInfo, navItems, LOGO_URL } from "../../data/mock";
 import { Facebook, Twitter, Instagram, Youtube, Linkedin } from "lucide-react";
 
 const Footer = () => {
@@ -8,13 +8,7 @@ const Footer = () => {
       <div className="max-w-[1400px] mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-12 gap-10">
         <div className="md:col-span-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#009EDB] flex items-center justify-center">
-              <svg viewBox="0 0 64 64" className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="32" cy="32" r="26" />
-                <ellipse cx="32" cy="32" rx="13" ry="26" />
-                <path d="M6 32h52M10 18h44M10 46h44" />
-              </svg>
-            </div>
+            <img src={LOGO_URL} alt="Global Relations Foundation" className="w-12 h-12 object-contain bg-white/5 rounded-full p-1" />
             <div>
               <div className="text-[10px] tracking-[0.25em] uppercase text-[#7cc3ef]">America</div>
               <div className="font-serif text-lg">Global Relations Foundation</div>

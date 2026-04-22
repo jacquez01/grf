@@ -13,7 +13,7 @@ export const contactInfo = {
   secretaryGeneral: "+1 (646) 444-0818",
   office: "+1 (202) 773-9330",
   africa: "+234 901 100 0333",
-  email: "info@agrfoundation.org",
+  email: "info@globerelations.org",
   address: "Washington, D.C., United States of America"
 };
 
@@ -75,11 +75,11 @@ export const welcomeNotes = [
 ];
 
 export const executiveBoard = [
-  { id: 1, name: "Jace Owie", title: "President & Chairman", region: "Global", image: "https://images.unsplash.com/photo-1556484687-30636164638b" },
-  { id: 2, name: "Terryann Talbert", title: "First Secretary General", region: "United States", image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca" },
-  { id: 3, name: "Anita Johnson", title: "Programs & Engagements", region: "United States", image: "https://images.pexels.com/photos/8423008/pexels-photo-8423008.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
-  { id: 4, name: "Jerry Owie", title: "National Project Lead & Project Director", region: "United States", image: "https://images.pexels.com/photos/28100865/pexels-photo-28100865.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
-  { id: 5, name: "Vincent Idele-iyen", title: "European Director", region: "Europe", image: "https://images.pexels.com/photos/10484479/pexels-photo-10484479.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" }
+  { id: 1, name: "Jace Owie", title: "President & Chairman", region: "Global", image: "https://images.unsplash.com/photo-1556484687-30636164638b", email: "info@globerelations.org", linkedin: "https://www.linkedin.com/in/uyi-jace-owie-3b02bb101/" },
+  { id: 2, name: "Terryann Talbert", title: "First Secretary General", region: "United States", image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca", email: "info@globerelations.org", linkedin: "#" },
+  { id: 3, name: "Anita Johnson", title: "Programs & Engagements", region: "United States", image: "https://images.pexels.com/photos/8423008/pexels-photo-8423008.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", email: "info@globerelations.org", linkedin: "#" },
+  { id: 4, name: "Jerry Owie", title: "National Project Lead & Project Director", region: "United States", image: "https://images.pexels.com/photos/28100865/pexels-photo-28100865.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", email: "info@globerelations.org", linkedin: "#" },
+  { id: 5, name: "Vincent Idele-iyen", title: "European Director", region: "Europe", image: "https://images.pexels.com/photos/10484479/pexels-photo-10484479.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", email: "info@globerelations.org", linkedin: "#" }
 ];
 
 export const whatWeDo = [
@@ -196,8 +196,11 @@ export const partners = [
   { name: "Rumors About Germany", note: "Migration Awareness Partner", url: "#" },
   { name: "German Federal Foreign Office", note: "Institutional Partner", url: "#" },
   { name: "Bauchi State Government", note: "Regional Government Partner", url: "#" },
+  { name: "Ebonyi State Government", note: "Regional Government Partner", url: "#" },
   { name: "National Youth Council", note: "Youth Development Partner", url: "#" }
 ];
+
+export const LOGO_URL = "https://customer-assets.emergentagent.com/job_agrf-global-bridge/artifacts/9gr1j46s_Global_Relations_Foundation_Logo_-_Approachable_Emblem_Style-removebg-preview%20%281%29.png";
 
 export const whereWeWork = [
   { region: "United States", flag: "US", blurb: "Housing, healthcare, youth, crisis response and community leadership across U.S. metro regions.", image: "https://images.pexels.com/photos/8423008/pexels-photo-8423008.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },

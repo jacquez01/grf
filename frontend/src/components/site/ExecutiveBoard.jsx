@@ -25,8 +25,8 @@ const ExecutiveBoard = () => {
                 <div className="font-serif text-xl mt-1">{m.name}</div>
                 <div className="text-sm text-white/75 mt-1">{m.title}</div>
                 <div className="mt-4 flex items-center gap-2 opacity-70 group-hover:opacity-100 transition-opacity">
-                  <button aria-label="linkedin" className="w-8 h-8 border border-white/30 hover:bg-[#009EDB] hover:border-[#009EDB] flex items-center justify-center"><Linkedin className="w-3.5 h-3.5" /></button>
-                  <button aria-label="email" className="w-8 h-8 border border-white/30 hover:bg-[#009EDB] hover:border-[#009EDB] flex items-center justify-center"><Mail className="w-3.5 h-3.5" /></button>
+                  <a href={m.linkedin} target={m.linkedin === "#" ? "_self" : "_blank"} rel="noreferrer" aria-label={`${m.name} on LinkedIn`} className="w-8 h-8 border border-white/30 hover:bg-[#009EDB] hover:border-[#009EDB] flex items-center justify-center"><Linkedin className="w-3.5 h-3.5" /></a>
+                  <a href={`mailto:${m.email}`} aria-label={`Email ${m.name}`} className="w-8 h-8 border border-white/30 hover:bg-[#009EDB] hover:border-[#009EDB] flex items-center justify-center"><Mail className="w-3.5 h-3.5" /></a>
                 </div>
               </div>
             </div>
