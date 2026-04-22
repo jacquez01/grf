@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { contactInfo, siteInfo } from "../../data/mock";
 import { Phone, Mail, MapPin, Send, Globe } from "lucide-react";
 import { Button } from "../ui/button";
@@ -6,22 +7,31 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
 
+const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [loading, setLoading] = useState(false);
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
       toast.error("Please fill required fields.");
       return;
     }
+    setLoading(true);
     try {
-      const saved = JSON.parse(localStorage.getItem("agrf_contacts") || "[]");
-      saved.push({ ...form, at: new Date().toISOString() });
-      localStorage.setItem("agrf_contacts", JSON.stringify(saved));
-    } catch { /* noop */ }
-    toast.success("Message received. We will reply shortly.");
-    setForm({ name: "", email: "", subject: "", message: "" });
+      const { data } = await axios.post(`${API}/contact`, form);
+      toast.success("Message received. We will reply shortly.");
+      if (data?.mailto) {
+        window.open(data.mailto, "_blank");
+      }
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch (err) {
+      toast.error(err?.response?.data?.detail?.[0]?.msg || "Could not send message. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const lines = [
@@ -69,8 +79,8 @@ const Contact = () => {
               <Input value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} placeholder="Subject" className="sm:col-span-2 rounded-none border-slate-300 focus-visible:ring-[#009EDB]" />
               <Textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Your message" className="sm:col-span-2 min-h-[140px] rounded-none border-slate-300 focus-visible:ring-[#009EDB]" />
             </div>
-            <Button type="submit" className="mt-5 rounded-none h-12 bg-[#009EDB] hover:bg-[#0086b8] text-white px-6 font-semibold">
-              <Send className="w-4 h-4 mr-2" /> Send Message
+            <Button type="submit" disabled={loading} className="mt-5 rounded-none h-12 bg-[#009EDB] hover:bg-[#0086b8] text-white px-6 font-semibold">
+              <Send className="w-4 h-4 mr-2" /> {loading ? "Sending..." : "Send Message"}
             </Button>
           </form>
         </div>

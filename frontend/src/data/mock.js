@@ -200,7 +200,7 @@ export const partners = [
   { name: "National Youth Council", note: "Youth Development Partner", url: "#" }
 ];
 
-export const LOGO_URL = "https://customer-assets.emergentagent.com/job_agrf-global-bridge/artifacts/9gr1j46s_Global_Relations_Foundation_Logo_-_Approachable_Emblem_Style-removebg-preview%20%281%29.png";
+export const LOGO_URL = "https://customer-assets.emergentagent.com/job_agrf-global-bridge/artifacts/rza73wh8_cropped_circle_image%20%284%29.png";
 
 export const whereWeWork = [
   { region: "United States", flag: "US", blurb: "Housing, healthcare, youth, crisis response and community leadership across U.S. metro regions.", image: "https://images.pexels.com/photos/8423008/pexels-photo-8423008.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Send, Building2, Globe2, Landmark } from "lucide-react";
+import axios from "axios";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { toast } from "sonner";
+
+const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
 const bullets = [
   { icon: Landmark, title: "Heritage & Museum Practice", text: "State-of-the-art galleries, provenance research labs and rotating exhibits from four continents." },
@@ -13,20 +16,32 @@ const bullets = [
 
 const ProposalSection = () => {
   const [form, setForm] = useState({ org: "", name: "", email: "", message: "" });
+  const [loading, setLoading] = useState(false);
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     if (!form.org || !form.name || !form.email) {
       toast.error("Please complete organization, name and email.");
       return;
     }
+    setLoading(true);
     try {
-      const saved = JSON.parse(localStorage.getItem("agrf_proposals") || "[]");
-      saved.push({ ...form, at: new Date().toISOString() });
-      localStorage.setItem("agrf_proposals", JSON.stringify(saved));
-    } catch { /* noop */ }
-    toast.success("Thank you. Our partnerships team will be in touch.");
-    setForm({ org: "", name: "", email: "", message: "" });
+      const { data } = await axios.post(`${API}/proposal`, {
+        organization: form.org,
+        name: form.name,
+        email: form.email,
+        message: form.message,
+      });
+      toast.success("Thank you. Our partnerships team will be in touch.");
+      if (data?.mailto) {
+        window.open(data.mailto, "_blank");
+      }
+      setForm({ org: "", name: "", email: "", message: "" });
+    } catch (err) {
+      toast.error(err?.response?.data?.detail?.[0]?.msg || "Could not submit. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -75,8 +90,8 @@ const ProposalSection = () => {
                   <Textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="Tell us about your interest, scope, and any questions..." className="rounded-none border-slate-300 focus-visible:ring-[#009EDB] mt-1 min-h-[120px]" />
                 </div>
               </div>
-              <Button type="submit" className="mt-6 rounded-none bg-[#009EDB] hover:bg-[#0086b8] text-white h-12 px-6 font-semibold">
-                <Send className="w-4 h-4 mr-2" /> Submit Inquiry
+              <Button type="submit" disabled={loading} className="mt-6 rounded-none bg-[#009EDB] hover:bg-[#0086b8] text-white h-12 px-6 font-semibold">
+                <Send className="w-4 h-4 mr-2" /> {loading ? "Submitting..." : "Submit Inquiry"}
               </Button>
             </form>
           </div>

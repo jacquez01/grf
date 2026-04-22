@@ -101,3 +101,122 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Test the AGRF FastAPI backend at the public URL with all endpoints including contact, proposal, volunteer forms and validation"
+
+backend:
+  - task: "Root API endpoint"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "GET /api/ endpoint tested successfully. Returns correct message and notify array with info@globerelations.org and jaceowie@gmail.com"
+
+  - task: "Contact form submission"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "POST /api/contact tested successfully. Returns 200 with correct response structure including id, ok: true, notify_to array, and properly formatted mailto link with URL-encoded recipients"
+
+  - task: "Contact form listing"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "GET /api/contact tested successfully. Returns list of contacts including test entry with correct structure and timestamps"
+
+  - task: "Proposal submission"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "POST /api/proposal tested successfully. Returns 200 with mailto link containing '[AGRF Partnership]' in subject as required"
+
+  - task: "Proposal listing"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "GET /api/proposal tested successfully. Returns list of proposals including test entry with correct organization and contact details"
+
+  - task: "Volunteer registration"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "POST /api/volunteer tested successfully. Returns 200 with correct response structure for volunteer interest submissions"
+
+  - task: "Input validation"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Validation tested successfully. Returns 422 for invalid email and missing required fields as expected"
+
+  - task: "CORS configuration"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "CORS tested successfully. Allows all origins (*) and includes proper headers for preview domain access"
+
+frontend:
+  # No frontend testing performed as per instructions
+
+metadata:
+  created_by: "testing_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "All backend endpoints tested and verified"
+  stuck_tasks: []
+  test_all: true
+  test_priority: "high_first"
+
+agent_communication:
+    - agent: "testing"
+      message: "Completed comprehensive testing of AGRF FastAPI backend. All 8 endpoints tested successfully: root endpoint, contact submission/listing, proposal submission/listing, volunteer registration, input validation, and CORS configuration. All tests passed with proper response structures, validation, and mailto link formatting. Backend is fully functional and ready for production use."
