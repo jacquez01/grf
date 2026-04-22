@@ -203,7 +203,7 @@ export const partners = [
 export const LOGO_URL = "https://customer-assets.emergentagent.com/job_agrf-global-bridge/artifacts/vs4dhuee_cropped_circle_image%20%2810%29.png";
 
 export const whereWeWork = [
-  { region: "United States", flag: "US", blurb: "Active in Washington D.C., New York, New Jersey, Maryland and across the United States — housing, healthcare, youth, crisis response and community leadership.", image: "https://images.unsplash.com/photo-1677470560561-c5ba18d38f6e?crop=entropy&cs=srgb&fm=jpg&q=85" },
+  { region: "United States", flag: "US", blurb: "Active in Washington D.C., New York, New Jersey, Maryland and across the United States — housing, healthcare, youth, crisis response and community leadership.", image: "https://images.unsplash.com/photo-1713098965471-d324f294a71d?crop=entropy&cs=srgb&fm=jpg&q=85" },
   { region: "Canada", flag: "CA", blurb: "Cross-border cultural exchanges, newcomer integration and skilled-worker apprenticeships.", image: "https://images.pexels.com/photos/36729916/pexels-photo-36729916.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
   { region: "Europe", flag: "EU", blurb: "Heritage protection, migration dialogue and intercultural policy with partners in Italy, Germany, Netherlands and Switzerland.", image: "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?crop=entropy&cs=srgb&fm=jpg&q=85" },
   { region: "Africa", flag: "AF", blurb: "Clean water, biodiversity, entrepreneurship and youth empowerment across Sub-Saharan communities.", image: "https://images.pexels.com/photos/28101461/pexels-photo-28101461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" }
