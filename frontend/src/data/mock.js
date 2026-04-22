@@ -6,7 +6,7 @@ export const siteInfo = {
   parent: "Global Relations Foundation",
   tagline: "Building Bridges Between Communities and Nations for Development, Peace and Sustainability",
   regions: ["USA", "Canada", "Europe", "Africa"],
-  presentRegion: "USA, Europe, Africa"
+  presentRegion: "USA, Europe, Canada, Africa"
 };
 
 export const contactInfo = {
@@ -200,14 +200,16 @@ export const partners = [
   { name: "National Youth Council", note: "Youth Development Partner", url: "#" }
 ];
 
-export const LOGO_URL = "https://customer-assets.emergentagent.com/job_agrf-global-bridge/artifacts/rza73wh8_cropped_circle_image%20%284%29.png";
+export const LOGO_URL = "https://customer-assets.emergentagent.com/job_agrf-global-bridge/artifacts/vs4dhuee_cropped_circle_image%20%2810%29.png";
 
 export const whereWeWork = [
-  { region: "United States", flag: "US", blurb: "Housing, healthcare, youth, crisis response and community leadership across U.S. metro regions.", image: "https://images.pexels.com/photos/8423008/pexels-photo-8423008.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
+  { region: "United States", flag: "US", blurb: "Active in New York, New Jersey, Maryland and across the United States — housing, healthcare, youth, crisis response and community leadership.", image: "https://images.pexels.com/photos/8423008/pexels-photo-8423008.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
   { region: "Canada", flag: "CA", blurb: "Cross-border cultural exchanges, newcomer integration and skilled-worker apprenticeships.", image: "https://images.pexels.com/photos/36729916/pexels-photo-36729916.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
-  { region: "Europe", flag: "EU", blurb: "Heritage protection, migration dialogue and intercultural policy in partnership with European institutions.", image: "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?crop=entropy&cs=srgb&fm=jpg&q=85" },
+  { region: "Europe", flag: "EU", blurb: "Heritage protection, migration dialogue and intercultural policy with partners in Italy, Germany, Netherlands and Switzerland.", image: "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?crop=entropy&cs=srgb&fm=jpg&q=85" },
   { region: "Africa", flag: "AF", blurb: "Clean water, biodiversity, entrepreneurship and youth empowerment across Sub-Saharan communities.", image: "https://images.pexels.com/photos/28101461/pexels-photo-28101461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" }
 ];
+
+export const europeanPartnerships = ["Italy", "Germany", "Netherlands", "Switzerland"];
 
 export const featuredPrograms = [
   {
@@ -216,9 +218,9 @@ export const featuredPrograms = [
     title: "Clean Water Initiative \u2014 Africa",
     excerpt: "Deploying community wells, sanitation training and maintenance cooperatives across Sub-Saharan villages.",
     image: "https://images.unsplash.com/photo-1543181077-099f32f30a1c?crop=entropy&cs=srgb&fm=jpg&q=85",
-    raised: 1000,
-    goal: 100000,
-    end: "1 Dec 2026"
+    raised: 0,
+    goal: 0,
+    end: "Ongoing Initiative"
   },
   {
     id: "heritage-center",
@@ -246,11 +248,33 @@ export const featuredPrograms = [
     title: "Back-to-School Campaign",
     excerpt: "Supplies, mentoring and wraparound services for under-resourced classrooms in the United States.",
     image: "https://images.pexels.com/photos/8423416/pexels-photo-8423416.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    raised: 500,
-    goal: 50000,
-    end: "1 Dec 2026"
+    raised: 0,
+    goal: 0,
+    end: "Ongoing Initiative"
   }
 ];
+
+export const filmMedia = {
+  eyebrow: "Film & Media",
+  title: "Taking Action Through Film & Media",
+  lead: "At America Global Relations Foundation (AGRF), we believe that storytelling is one of the most powerful tools for change.",
+  body: "One of the key ways we take action is through the development of impactful film and media projects designed to raise awareness on pressing social issues. By combining compelling narratives with real-world experiences, we create content that informs, inspires, and drives meaningful conversations.",
+  focusHeading: "Our media initiatives are focused on:",
+  focusItems: [
+    "Highlighting urgent global and domestic challenges",
+    "Amplifying underrepresented voices and communities",
+    "Promoting cultural understanding and unity",
+    "Encouraging dialogue that leads to solutions and action"
+  ],
+  closing: "Through these projects, AGRF works to bridge cultural gaps and tackle pressing issues from the root cause across the United States and around the world — fostering a deeper sense of connection, empathy and shared responsibility. We are committed to using media not just as a platform for storytelling, but as a catalyst for awareness, advocacy and lasting impact.",
+  featured: {
+    label: "Featured Production",
+    title: "Immigration Documentary",
+    meta: "In partnership with the German Federal Foreign Office",
+    description: "Our first film — a documentary examining the roots, realities and human stories of migration, produced in partnership with the German Federal Foreign Office.",
+    image: "https://images.pexels.com/photos/7142494/pexels-photo-7142494.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+  }
+};
 
 export const newsPosts = [
   { id: 1, category: "Youth Empowerment", title: "Youth Synergy: Building Capacity for a Brighter Tomorrow", excerpt: "How investing in young people transforms communities and shapes diplomacy for decades to come.", image: "https://images.pexels.com/photos/10484479/pexels-photo-10484479.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", date: "22 Mar 2026" },
@@ -263,6 +287,7 @@ export const navItems = [
   { label: "What We Do", anchor: "#what-we-do", children: ["Cultural Diplomacy", "Public Diplomacy", "Arts & Heritage", "Emergency Response", "Biodiversity & Green Energy"] },
   { label: "Programs", anchor: "#programs", children: ["Basic Human Needs", "Creating Income", "Stable Housing", "Empowering Communities"] },
   { label: "Where We Work", anchor: "#where-we-work", children: ["United States", "Canada", "Europe", "Africa"] },
+  { label: "Film & Media", anchor: "#film-media", children: ["Featured Productions", "Immigration Documentary"] },
   { label: "Academic", anchor: "#academic", children: ["America Global Citizen College"] },
   { label: "News", anchor: "#news", children: ["Stories", "Publications"] },
   { label: "Get Involved", anchor: "#get-involved", children: ["Volunteer", "Donate", "Partner"] }

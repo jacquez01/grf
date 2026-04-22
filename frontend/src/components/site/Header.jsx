@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 
 const Logo = () => (
   <a href="#top" className="flex items-center gap-3 group">
-    <img src={LOGO_URL} alt="Global Relations Foundation" className="w-12 h-12 object-contain bg-[#0b2c4a] rounded-full p-1 ring-2 ring-[#009EDB]/20" />
+    <img src={LOGO_URL} alt="America Global Relations Foundation" className="w-12 h-12 object-contain rounded-full bg-white ring-1 ring-slate-200" />
     <div className="leading-tight">
       <div className="text-[11px] tracking-[0.22em] uppercase text-[#0b2c4a]/70 font-semibold">America</div>
       <div className="text-[17px] md:text-[19px] font-serif font-semibold text-[#0b2c4a]">Global Relations Foundation</div>

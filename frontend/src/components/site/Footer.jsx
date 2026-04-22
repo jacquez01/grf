@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="max-w-[1400px] mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-12 gap-10">
         <div className="md:col-span-4">
           <div className="flex items-center gap-3">
-            <img src={LOGO_URL} alt="Global Relations Foundation" className="w-12 h-12 object-contain bg-white/5 rounded-full p-1" />
+            <img src={LOGO_URL} alt="America Global Relations Foundation" className="w-12 h-12 object-contain rounded-full bg-white" />
             <div>
               <div className="text-[10px] tracking-[0.25em] uppercase text-[#7cc3ef]">America</div>
               <div className="font-serif text-lg">Global Relations Foundation</div>

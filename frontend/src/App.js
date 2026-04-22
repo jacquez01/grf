@@ -15,6 +15,7 @@ import WhereWeWork from "./components/site/WhereWeWork";
 import Partners from "./components/site/Partners";
 import ProposalSection from "./components/site/ProposalSection";
 import Campaigns from "./components/site/Campaigns";
+import FilmMedia from "./components/site/FilmMedia";
 import Contact from "./components/site/Contact";
 import Footer from "./components/site/Footer";
 
@@ -30,6 +31,7 @@ const Home = () => {
       <FeaturedPrograms />
       <ExecutiveBoard />
       <WhereWeWork />
+      <FilmMedia />
       <Campaigns />
       <Partners />
       <ProposalSection />

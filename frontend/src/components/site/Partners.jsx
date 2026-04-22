@@ -1,6 +1,6 @@
 import React from "react";
-import { partners } from "../../data/mock";
-import { ExternalLink, GraduationCap } from "lucide-react";
+import { partners, europeanPartnerships } from "../../data/mock";
+import { ExternalLink, GraduationCap, Globe2 } from "lucide-react";
 
 const Partners = () => {
   return (
@@ -38,6 +38,26 @@ const Partners = () => {
               <div className="font-serif text-[17px] leading-tight mt-4">{p.name}</div>
             </a>
           ))}
+        </div>
+
+        {/* European Partnerships */}
+        <div className="mt-10 bg-white border border-slate-200 p-7 md:p-9 flex flex-col md:flex-row gap-6 md:items-center">
+          <div className="flex items-center gap-3 md:min-w-[260px]">
+            <div className="w-11 h-11 bg-[#0b2c4a] text-white flex items-center justify-center shrink-0">
+              <Globe2 className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-[11px] tracking-[0.22em] uppercase text-[#009EDB] font-semibold">Present European Partnerships</div>
+              <div className="font-serif text-xl text-[#0b2c4a] mt-0.5">Active in four nations</div>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2 md:ml-auto">
+            {europeanPartnerships.map((country) => (
+              <span key={country} className="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 text-[#0b2c4a] text-sm font-semibold hover:bg-[#0b2c4a] hover:text-white hover:border-[#0b2c4a] transition-colors cursor-default">
+                {country}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
