@@ -374,12 +374,15 @@ export const youthCenter = {
     "Contribute positively to their communities"
   ],
   regions: [
-    { name: "United States", note: "America Youth Council House — flagship center" },
-    { name: "Germany", note: "European branch — Berlin / Frankfurt" },
-    { name: "Netherlands", note: "European branch — Amsterdam" },
-    { name: "Italy", note: "European branch — Rome / Milan" },
-    { name: "African Nations", note: "Community-rooted regional centers" },
-    { name: "Additional Regions", note: "Planned expansion worldwide" }
+    { name: "America Youth Council House — New York", note: "Flagship U.S. center", country: "United States" },
+    { name: "AGRF Youth Succeed Center — New Jersey", note: "U.S. regional center", country: "United States" },
+    { name: "AGRF Youth Succeed Center — Maryland", note: "U.S. regional center", country: "United States" },
+    { name: "Berlin Youth Succeed Center", note: "German flagship branch", country: "Germany" },
+    { name: "Amsterdam Youth Succeed Center", note: "Dutch flagship branch", country: "Netherlands" },
+    { name: "Rome Youth Succeed Center", note: "Italian flagship branch", country: "Italy" },
+    { name: "Bauchi Youth Succeed Center", note: "African regional center", country: "Nigeria" },
+    { name: "Ebonyi Youth Succeed Center", note: "African regional center", country: "Nigeria" },
+    { name: "Additional Regions", note: "Planned expansion worldwide", country: "Global" }
   ]
 };
 

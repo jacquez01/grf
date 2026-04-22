@@ -201,22 +201,72 @@ backend:
           agent: "testing"
           comment: "CORS tested successfully. Allows all origins (*) and includes proper headers for preview domain access"
 
+  - task: "Mentor/Volunteer signup endpoint"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "POST /api/mentor-signup tested successfully with full mentor data. Returns 200 with correct response structure including id, ok: true, notify_to array, and properly formatted mailto link with '[AGRF Youth Succeed]' subject and role/center information in body"
+
+  - task: "Mentor signup minimal data validation"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "POST /api/mentor-signup tested successfully with minimal volunteer data (name, email, role only). Returns 200 with correct response structure"
+
+  - task: "Mentor signup input validation"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Mentor signup validation tested successfully. Returns 422 for missing required 'role' field and invalid email format as expected"
+
+  - task: "Mentor signup listing"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "GET /api/mentor-signup tested successfully. Returns list of mentor signups including test entries with correct structure and timestamps"
+
 frontend:
   # No frontend testing performed as per instructions
 
 metadata:
   created_by: "testing_agent"
   version: "1.0"
-  test_sequence: 1
+  test_sequence: 2
   run_ui: false
 
 test_plan:
   current_focus:
-    - "All backend endpoints tested and verified"
+    - "All backend endpoints tested and verified including new mentor-signup functionality"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
 
 agent_communication:
     - agent: "testing"
-      message: "Completed comprehensive testing of AGRF FastAPI backend. All 8 endpoints tested successfully: root endpoint, contact submission/listing, proposal submission/listing, volunteer registration, input validation, and CORS configuration. All tests passed with proper response structures, validation, and mailto link formatting. Backend is fully functional and ready for production use."
+      message: "Completed comprehensive testing of AGRF FastAPI backend. All 8 endpoints tested successfully: root endpoint, contact submission/listing, proposal submission/listing, volunteer registration, input validation, and CORS configuration. Backend is fully functional and ready for production use."
+    - agent: "testing"
+      message: "Completed testing of new mentor-signup endpoints. All 4 new mentor-signup related tests passed: full mentor data submission, minimal volunteer data submission, input validation (missing role and invalid email), and mentor signup listing. The mentor-signup endpoint correctly formats mailto links with '[AGRF Youth Succeed]' subject and includes role and center information in the body. All existing endpoints continue to work correctly. Total: 12/12 tests passed."

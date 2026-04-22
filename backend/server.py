@@ -71,6 +71,21 @@ class Volunteer(VolunteerCreate):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
+class MentorSignupCreate(BaseModel):
+    name: str
+    email: EmailStr
+    phone: Optional[str] = ""
+    role: str  # Mentor | Volunteer | Center Lead | Partner
+    center: Optional[str] = ""
+    experience: Optional[str] = ""
+    message: Optional[str] = ""
+
+
+class MentorSignup(MentorSignupCreate):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
 class SubmissionAck(BaseModel):
     id: str
     ok: bool = True
@@ -164,6 +179,28 @@ async def create_volunteer(payload: VolunteerCreate):
     )
     subject = f"[AGRF Volunteer] {obj.name}"
     return SubmissionAck(id=obj.id, mailto=build_mailto(subject, body))
+
+
+@api_router.post("/mentor-signup", response_model=SubmissionAck)
+async def create_mentor_signup(payload: MentorSignupCreate):
+    obj = MentorSignup(**payload.model_dump())
+    await db.mentor_signups.insert_one(to_doc(obj))
+    body = (
+        f"New Youth Succeed Center signup\n\n"
+        f"Role: {obj.role}\nName: {obj.name}\nEmail: {obj.email}\nPhone: {obj.phone or '(none)'}\n"
+        f"Preferred Center: {obj.center or '(any)'}\n\nExperience:\n{obj.experience or '(none)'}\n\n"
+        f"Message:\n{obj.message or '(none)'}\n\n"
+        f"Submission ID: {obj.id}\nTime (UTC): {obj.created_at.isoformat()}\n"
+    )
+    subject = f"[AGRF Youth Succeed] {obj.role} — {obj.name}"
+    logging.info("Mentor signup stored id=%s role=%s", obj.id, obj.role)
+    return SubmissionAck(id=obj.id, mailto=build_mailto(subject, body))
+
+
+@api_router.get("/mentor-signup", response_model=List[MentorSignup])
+async def list_mentor_signups():
+    docs = await db.mentor_signups.find().sort("created_at", -1).to_list(500)
+    return [MentorSignup(**d) for d in docs]
 
 
 app.include_router(api_router)

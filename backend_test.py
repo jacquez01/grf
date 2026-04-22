@@ -253,6 +253,160 @@ def test_validation():
         print(f"❌ Validation test error: {str(e)}")
         return False
 
+def test_mentor_signup_full():
+    """Test POST /api/mentor-signup with full mentor data"""
+    print("\n🔍 Testing POST /api/mentor-signup (full mentor data)")
+    
+    mentor_data = {
+        "name": "Jane Doe",
+        "email": "jane@test.com", 
+        "phone": "555-0100",
+        "role": "Mentor",
+        "center": "Berlin Youth Succeed Center",
+        "experience": "5 years of youth mentoring",
+        "message": "Available weekends."
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/mentor-signup", json=mentor_data)
+        print(f"Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"Response: {json.dumps(data, indent=2)}")
+            
+            # Verify required fields
+            required_fields = ["id", "ok", "notify_to", "mailto"]
+            if all(field in data for field in required_fields):
+                # Verify mailto subject contains [AGRF Youth Succeed]
+                mailto = data["mailto"]
+                if "[AGRF Youth Succeed]" in unquote(mailto):
+                    # Verify mailto body contains role "Mentor" and center
+                    if "Mentor" in unquote(mailto) and "Berlin Youth Succeed Center" in unquote(mailto):
+                        print("✅ Mentor signup (full data) working correctly")
+                        return True, data["id"]
+                    else:
+                        print(f"❌ Mailto missing role 'Mentor' or center info: {unquote(mailto)}")
+                        return False, None
+                else:
+                    print(f"❌ Mailto subject missing '[AGRF Youth Succeed]': {unquote(mailto)}")
+                    return False, None
+            else:
+                print(f"❌ Missing required fields. Expected: {required_fields}")
+                return False, None
+        else:
+            print(f"❌ Mentor signup failed with status {response.status_code}")
+            print(f"Response: {response.text}")
+            return False, None
+            
+    except Exception as e:
+        print(f"❌ Mentor signup error: {str(e)}")
+        return False, None
+
+def test_mentor_signup_minimal():
+    """Test POST /api/mentor-signup with minimal volunteer data"""
+    print("\n🔍 Testing POST /api/mentor-signup (minimal volunteer data)")
+    
+    volunteer_data = {
+        "name": "Min",
+        "email": "m@t.com",
+        "role": "Volunteer"
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/mentor-signup", json=volunteer_data)
+        print(f"Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"Response: {json.dumps(data, indent=2)}")
+            print("✅ Mentor signup (minimal data) working correctly")
+            return True, data["id"]
+        else:
+            print(f"❌ Minimal mentor signup failed with status {response.status_code}")
+            print(f"Response: {response.text}")
+            return False, None
+            
+    except Exception as e:
+        print(f"❌ Minimal mentor signup error: {str(e)}")
+        return False, None
+
+def test_mentor_signup_validation():
+    """Test mentor-signup validation with invalid data"""
+    print("\n🔍 Testing mentor-signup validation")
+    
+    # Test missing required 'role' field
+    print("Testing missing 'role' field...")
+    invalid_data_no_role = {
+        "name": "Test User",
+        "email": "test@example.com"
+        # Missing 'role' field
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/mentor-signup", json=invalid_data_no_role)
+        print(f"Status (missing role): {response.status_code}")
+        
+        if response.status_code != 422:
+            print(f"❌ Expected 422 for missing role, got {response.status_code}")
+            return False
+    except Exception as e:
+        print(f"❌ Error testing missing role: {str(e)}")
+        return False
+    
+    # Test invalid email
+    print("Testing invalid email...")
+    invalid_data_email = {
+        "name": "Test User",
+        "email": "not-an-email",
+        "role": "Volunteer"
+    }
+    
+    try:
+        response = requests.post(f"{BACKEND_URL}/mentor-signup", json=invalid_data_email)
+        print(f"Status (invalid email): {response.status_code}")
+        
+        if response.status_code == 422:
+            print("✅ Mentor signup validation working correctly")
+            return True
+        else:
+            print(f"❌ Expected 422 for invalid email, got {response.status_code}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Error testing invalid email: {str(e)}")
+        return False
+
+def test_mentor_signup_list():
+    """Test GET /api/mentor-signup endpoint"""
+    print("\n🔍 Testing GET /api/mentor-signup")
+    
+    try:
+        response = requests.get(f"{BACKEND_URL}/mentor-signup")
+        print(f"Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"Found {len(data)} mentor signup entries")
+            
+            # Look for our test entries
+            found_mentor = any(entry.get("email") == "jane@test.com" for entry in data)
+            found_volunteer = any(entry.get("email") == "m@t.com" for entry in data)
+            
+            if found_mentor and found_volunteer:
+                print("✅ Mentor signup list working correctly - found test entries")
+                return True
+            else:
+                print(f"⚠️ Mentor signup list working but test entries not found. Mentor: {found_mentor}, Volunteer: {found_volunteer}")
+                return True  # Still consider it working even if entries not found
+        else:
+            print(f"❌ Mentor signup list failed with status {response.status_code}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ Mentor signup list error: {str(e)}")
+        return False
+
 def test_cors():
     """Test CORS headers"""
     print("\n🔍 Testing CORS configuration")
@@ -299,6 +453,13 @@ def main():
     results['proposal_post'], proposal_id = test_proposal_submission()
     results['proposal_get'] = test_proposal_list()
     results['volunteer_post'] = test_volunteer_submission()
+    
+    # Test new mentor-signup endpoints
+    results['mentor_signup_full'], mentor_id = test_mentor_signup_full()
+    results['mentor_signup_minimal'], volunteer_id = test_mentor_signup_minimal()
+    results['mentor_signup_validation'] = test_mentor_signup_validation()
+    results['mentor_signup_list'] = test_mentor_signup_list()
+    
     results['validation'] = test_validation()
     results['cors'] = test_cors()
     

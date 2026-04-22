@@ -4,6 +4,7 @@ import { youthCenter, contactInfo } from "../data/mock";
 import TopBar from "../components/site/TopBar";
 import Header from "../components/site/Header";
 import Footer from "../components/site/Footer";
+import MentorSignupForm from "../components/site/MentorSignupForm";
 import { Toaster } from "sonner";
 import { Check, ArrowRight, Heart, Sparkles, Shield, BookOpen, Users, Globe2, Mail, MapPin } from "lucide-react";
 
@@ -55,8 +56,8 @@ const YouthSucceedCenter = () => {
               <a href="#pillars" className="inline-flex items-center gap-2 bg-white text-[#0b2c4a] px-6 py-3 font-semibold hover:bg-[#009EDB] hover:text-white transition-colors">
                 What We Do <ArrowRight className="w-4 h-4" />
               </a>
-              <a href="#get-involved" className="inline-flex items-center gap-2 border border-white text-white px-6 py-3 font-semibold hover:bg-white hover:text-[#0b2c4a] transition-colors">
-                Get Involved
+              <a href="#mentor-signup" className="inline-flex items-center gap-2 border border-white text-white px-6 py-3 font-semibold hover:bg-white hover:text-[#0b2c4a] transition-colors">
+                Volunteer or Mentor
               </a>
             </div>
           </div>
@@ -170,9 +171,9 @@ const YouthSucceedCenter = () => {
               <div key={r.name} className="border-r border-b border-white/10 p-7 hover:bg-white/5 transition-colors">
                 <div className="flex items-center gap-3">
                   <MapPin className="w-4 h-4 text-[#7cc3ef]" />
-                  <div className="text-[11px] tracking-[0.22em] uppercase text-[#7cc3ef] font-semibold">Region</div>
+                  <div className="text-[11px] tracking-[0.22em] uppercase text-[#7cc3ef] font-semibold">{r.country}</div>
                 </div>
-                <div className="font-serif text-2xl mt-3">{r.name}</div>
+                <div className="font-serif text-xl mt-3 leading-tight">{r.name}</div>
                 <div className="text-white/75 mt-2 text-sm">{r.note}</div>
               </div>
             ))}
@@ -224,6 +225,8 @@ const YouthSucceedCenter = () => {
           </div>
         </div>
       </section>
+
+      <MentorSignupForm />
 
       <Footer />
       <Toaster position="top-right" richColors />
