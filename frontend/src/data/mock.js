@@ -288,6 +288,7 @@ export const navItems = [
   { label: "Programs", anchor: "#programs", children: ["Basic Human Needs", "Creating Income", "Stable Housing", "Empowering Communities"] },
   { label: "Where We Work", anchor: "#where-we-work", children: ["United States", "Canada", "Europe", "Africa"] },
   { label: "Film & Media", anchor: "#film-media", children: ["Featured Productions", "Immigration Documentary"] },
+  { label: "Youth Succeed", anchor: "/youth-succeed-center", children: ["Open House Project", "Mentorship", "Talent Development", "Get Involved"] },
   { label: "Academic", anchor: "#academic", children: ["America Global Citizen College"] },
   { label: "News", anchor: "#news", children: ["Stories", "Publications"] },
   { label: "Get Involved", anchor: "#get-involved", children: ["Volunteer", "Donate", "Partner"] }
@@ -299,3 +300,87 @@ export const stats = [
   { label: "Active Projects", value: "48" },
   { label: "Countries Reached", value: "12" }
 ];
+
+export const youthCenter = {
+  heroImage: "https://images.unsplash.com/photo-1769335537919-a1f45f3f30bd?crop=entropy&cs=srgb&fm=jpg&q=85",
+  unityImage: "https://images.unsplash.com/photo-1497375638960-ca368c7231e4?crop=entropy&cs=srgb&fm=jpg&q=85",
+  closingImage: "https://images.unsplash.com/photo-1503300961747-204cbbdaeb51?crop=entropy&cs=srgb&fm=jpg&q=85",
+  pillars: [
+    {
+      id: 1,
+      title: "Mentorship & Counseling",
+      image: "https://images.pexels.com/photos/8457625/pexels-photo-8457625.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      points: [
+        "Free access to experienced mentors and advisors",
+        "Guidance on personal development, education and career paths",
+        "Safe, confidential counseling support"
+      ]
+    },
+    {
+      id: 2,
+      title: "Talent Development & Career Support",
+      image: "https://images.unsplash.com/photo-1700751615494-679d3197744a?crop=entropy&cs=srgb&fm=jpg&q=85",
+      points: [
+        "Identification and grooming of young talents",
+        "Connections to industry professionals and opportunities",
+        "Career development programs and skills training"
+      ]
+    },
+    {
+      id: 3,
+      title: "Youth Protection & Emergency Support",
+      image: "https://images.unsplash.com/photo-1576596344899-49eee1e6295d?crop=entropy&cs=srgb&fm=jpg&q=85",
+      points: [
+        "Assistance for vulnerable, displaced or distressed youth",
+        "Support systems addressing abuse, oppression and neglect",
+        "Intervention programs to help youth exit harmful environments"
+      ]
+    },
+    {
+      id: 4,
+      title: "Prevention & Awareness Programs",
+      image: "https://images.pexels.com/photos/18257507/pexels-photo-18257507.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      points: [
+        "Education on drug abuse, violence and crime prevention",
+        "Awareness campaigns addressing critical social issues",
+        "Community outreach and youth engagement initiatives"
+      ]
+    },
+    {
+      id: 5,
+      title: "Learning & Growth Platforms",
+      image: "https://images.unsplash.com/photo-1700751615331-64517c60342a?crop=entropy&cs=srgb&fm=jpg&q=85",
+      points: [
+        "Interactive sessions with mentors and leaders",
+        "Workshops, seminars and leadership training",
+        "Opportunities for personal and professional growth"
+      ]
+    },
+    {
+      id: 6,
+      title: "Community & Cultural Engagement",
+      image: "https://images.unsplash.com/photo-1503300961747-204cbbdaeb51?crop=entropy&cs=srgb&fm=jpg&q=85",
+      points: [
+        "Spaces for sports, recreation and healthy social interaction",
+        "Talent showcases and creative exchange programs",
+        "Cultural exchange initiatives promoting unity and diversity"
+      ]
+    }
+  ],
+  whyItMatters: [
+    "Discover their purpose",
+    "Build meaningful connections",
+    "Develop skills for the future",
+    "Contribute positively to their communities"
+  ],
+  regions: [
+    { name: "United States", note: "America Youth Council House — flagship center" },
+    { name: "Germany", note: "European branch — Berlin / Frankfurt" },
+    { name: "Netherlands", note: "European branch — Amsterdam" },
+    { name: "Italy", note: "European branch — Rome / Milan" },
+    { name: "African Nations", note: "Community-rooted regional centers" },
+    { name: "Additional Regions", note: "Planned expansion worldwide" }
+  ]
+};
+
+export const CHARITY_ID = "AMERICA GLOBAL RELATIONS FOUNDATION: A USA REGISTERED CHARITY CORPORATION — 0451160952";

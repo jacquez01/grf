@@ -1,17 +1,38 @@
 import React, { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { navItems, LOGO_URL } from "../../data/mock";
 import { Button } from "../ui/button";
 
 const Logo = () => (
-  <a href="#top" className="flex items-center gap-3 group">
+  <Link to="/" className="flex items-center gap-3 group">
     <img src={LOGO_URL} alt="America Global Relations Foundation" className="w-12 h-12 object-contain rounded-full bg-white ring-1 ring-slate-200" />
     <div className="leading-tight">
       <div className="text-[11px] tracking-[0.22em] uppercase text-[#0b2c4a]/70 font-semibold">America</div>
       <div className="text-[17px] md:text-[19px] font-serif font-semibold text-[#0b2c4a]">Global Relations Foundation</div>
     </div>
-  </a>
+  </Link>
 );
+
+// Build an href that works from any page: hash links resolve back to home
+const useResolvedHref = () => {
+  const { pathname } = useLocation();
+  return (anchor) => {
+    if (!anchor) return "/";
+    if (anchor.startsWith("/")) return anchor;
+    if (anchor.startsWith("#")) return pathname === "/" ? anchor : "/" + anchor;
+    return anchor;
+  };
+};
+
+const NavLink = ({ anchor, children, className }) => {
+  const resolve = useResolvedHref();
+  const href = resolve(anchor);
+  if (anchor?.startsWith("/")) {
+    return <Link to={href} className={className}>{children}</Link>;
+  }
+  return <a href={href} className={className}>{children}</a>;
+};
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -29,23 +50,23 @@ const Header = () => {
               onMouseEnter={() => setHovered(item.label)}
               onMouseLeave={() => setHovered(null)}
             >
-              <a
-                href={item.anchor}
+              <NavLink
+                anchor={item.anchor}
                 className="flex items-center gap-1 px-3 py-2 text-[14px] font-medium text-[#0b2c4a] hover:text-[#009EDB] transition-colors"
               >
                 {item.label}
                 <ChevronDown className="w-3.5 h-3.5 opacity-70" />
-              </a>
+              </NavLink>
               {hovered === item.label && (
                 <div className="absolute top-full left-0 mt-0 min-w-[220px] bg-white border border-slate-200 shadow-lg py-2 z-50">
                   {item.children.map((c) => (
-                    <a
+                    <NavLink
                       key={c}
-                      href={item.anchor}
+                      anchor={item.anchor}
                       className="block px-4 py-2 text-[13px] text-slate-700 hover:bg-[#009EDB]/10 hover:text-[#009EDB] border-l-2 border-transparent hover:border-[#009EDB]"
                     >
                       {c}
-                    </a>
+                    </NavLink>
                   ))}
                 </div>
               )}
@@ -54,10 +75,10 @@ const Header = () => {
         </nav>
         <div className="hidden md:flex items-center gap-2">
           <Button variant="outline" className="border-[#009EDB] text-[#009EDB] hover:bg-[#009EDB] hover:text-white rounded-none h-10" asChild>
-            <a href="#get-involved">Volunteer</a>
+            <NavLink anchor="#get-involved">Volunteer</NavLink>
           </Button>
           <Button className="bg-[#009EDB] hover:bg-[#0086b8] text-white rounded-none h-10 font-semibold" asChild>
-            <a href="#donate">Donate</a>
+            <NavLink anchor="#donate">Donate</NavLink>
           </Button>
         </div>
         <button className="lg:hidden text-[#0b2c4a]" onClick={() => setOpen(!open)} aria-label="menu">
@@ -68,13 +89,13 @@ const Header = () => {
         <div className="lg:hidden bg-white border-t border-slate-200">
           <div className="px-4 py-3 space-y-1">
             {navItems.map((item) => (
-              <a key={item.label} href={item.anchor} onClick={() => setOpen(false)} className="block py-2 px-2 text-[#0b2c4a] font-medium border-b border-slate-100">
+              <NavLink key={item.label} anchor={item.anchor} className="block py-2 px-2 text-[#0b2c4a] font-medium border-b border-slate-100">
                 {item.label}
-              </a>
+              </NavLink>
             ))}
             <div className="flex gap-2 pt-3">
-              <Button variant="outline" className="flex-1 rounded-none border-[#009EDB] text-[#009EDB]" asChild><a href="#get-involved">Volunteer</a></Button>
-              <Button className="flex-1 rounded-none bg-[#009EDB] text-white" asChild><a href="#donate">Donate</a></Button>
+              <Button variant="outline" className="flex-1 rounded-none border-[#009EDB] text-[#009EDB]" asChild><NavLink anchor="#get-involved">Volunteer</NavLink></Button>
+              <Button className="flex-1 rounded-none bg-[#009EDB] text-white" asChild><NavLink anchor="#donate">Donate</NavLink></Button>
             </div>
           </div>
         </div>

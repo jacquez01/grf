@@ -1,5 +1,6 @@
 import React from "react";
-import { contactInfo, siteInfo, navItems, LOGO_URL } from "../../data/mock";
+import { Link } from "react-router-dom";
+import { contactInfo, siteInfo, navItems, LOGO_URL, CHARITY_ID } from "../../data/mock";
 import { Facebook, Twitter, Instagram, Youtube, Linkedin } from "lucide-react";
 
 const Footer = () => {
@@ -46,10 +47,19 @@ const Footer = () => {
           </ul>
         </div>
       </div>
+      <div className="border-t border-white/10 bg-[#061a2c]">
+        <div className="max-w-[1400px] mx-auto px-6 py-6 text-center">
+          <div className="text-[11px] tracking-[0.25em] uppercase text-[#7cc3ef] font-semibold">Registered Charity</div>
+          <div className="mt-2 font-serif text-[15px] md:text-[16px] text-white/90 leading-relaxed">
+            {CHARITY_ID}
+          </div>
+        </div>
+      </div>
       <div className="border-t border-white/10">
         <div className="max-w-[1400px] mx-auto px-6 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/60">
           <div>&copy; {new Date().getFullYear()} America Global Relations Foundation. A chapter of Global Relations Foundation.</div>
           <div className="flex items-center gap-5">
+            <Link to="/youth-succeed-center" className="hover:text-white">Youth Succeed Center</Link>
             <a href="#" className="hover:text-white">Privacy</a>
             <a href="#" className="hover:text-white">Terms</a>
             <a href="#" className="hover:text-white">Accessibility</a>

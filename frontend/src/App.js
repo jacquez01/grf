@@ -18,6 +18,7 @@ import Campaigns from "./components/site/Campaigns";
 import FilmMedia from "./components/site/FilmMedia";
 import Contact from "./components/site/Contact";
 import Footer from "./components/site/Footer";
+import YouthSucceedCenter from "./pages/YouthSucceedCenter";
 
 const Home = () => {
   return (
@@ -48,6 +49,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/youth-succeed-center" element={<YouthSucceedCenter />} />
         </Routes>
       </BrowserRouter>
     </div>
