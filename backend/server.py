@@ -22,7 +22,7 @@ api_router = APIRouter(prefix="/api")
 
 # --- Models -------------------------------------------------------------
 
-NOTIFY_EMAILS = ["info@globerelations.org", "jaceowie@gmail.com"]
+NOTIFY_EMAILS = ["info@globerelations.org", "info@grfus.org", "jaceowie@gmail.com"]
 
 
 class StatusCheck(BaseModel):
@@ -82,6 +82,38 @@ class MentorSignupCreate(BaseModel):
 
 
 class MentorSignup(MentorSignupCreate):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class VolunteerApplicationCreate(BaseModel):
+    name: str
+    email: EmailStr
+    phone: Optional[str] = ""
+    country: str
+    region: Optional[str] = ""
+    profession: str
+    mode: str  # "In-Person" | "Online" | "Both"
+    availability: Optional[str] = ""
+    message: Optional[str] = ""
+
+
+class VolunteerApplication(VolunteerApplicationCreate):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+class AmbassadorApplicationCreate(BaseModel):
+    name: str
+    email: EmailStr
+    phone: Optional[str] = ""
+    country: Optional[str] = ""
+    track: str  # "Public Diplomat" | "Global Youth Voice Ambassador" | "Nomination"
+    nominee_name: Optional[str] = ""
+    message: Optional[str] = ""
+
+
+class AmbassadorApplication(AmbassadorApplicationCreate):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
@@ -201,6 +233,53 @@ async def create_mentor_signup(payload: MentorSignupCreate):
 async def list_mentor_signups():
     docs = await db.mentor_signups.find().sort("created_at", -1).to_list(500)
     return [MentorSignup(**d) for d in docs]
+
+
+@api_router.post("/volunteer-application", response_model=SubmissionAck)
+async def create_volunteer_application(payload: VolunteerApplicationCreate):
+    obj = VolunteerApplication(**payload.model_dump())
+    await db.volunteer_applications.insert_one(to_doc(obj))
+    body = (
+        f"New Volunteer Application\n\n"
+        f"Name: {obj.name}\nEmail: {obj.email}\nPhone: {obj.phone or '(none)'}\n"
+        f"Country: {obj.country}\nRegion / State: {obj.region or '(none)'}\n"
+        f"Profession: {obj.profession}\nVolunteer Mode: {obj.mode}\n"
+        f"Availability: {obj.availability or '(none)'}\n\n"
+        f"Message:\n{obj.message or '(none)'}\n\n"
+        f"Submission ID: {obj.id}\nTime (UTC): {obj.created_at.isoformat()}\n"
+    )
+    subject = f"[AGRF Volunteer Application] {obj.name} — {obj.country}"
+    logging.info("Volunteer application stored id=%s country=%s", obj.id, obj.country)
+    return SubmissionAck(id=obj.id, mailto=build_mailto(subject, body))
+
+
+@api_router.get("/volunteer-application", response_model=List[VolunteerApplication])
+async def list_volunteer_applications():
+    docs = await db.volunteer_applications.find().sort("created_at", -1).to_list(500)
+    return [VolunteerApplication(**d) for d in docs]
+
+
+@api_router.post("/ambassador-application", response_model=SubmissionAck)
+async def create_ambassador_application(payload: AmbassadorApplicationCreate):
+    obj = AmbassadorApplication(**payload.model_dump())
+    await db.ambassador_applications.insert_one(to_doc(obj))
+    body = (
+        f"New Ambassador / Public Diplomat Submission\n\n"
+        f"Track: {obj.track}\nName: {obj.name}\nEmail: {obj.email}\n"
+        f"Phone: {obj.phone or '(none)'}\nCountry: {obj.country or '(none)'}\n"
+        f"Nominee (if nomination): {obj.nominee_name or '(n/a)'}\n\n"
+        f"Message:\n{obj.message or '(none)'}\n\n"
+        f"Submission ID: {obj.id}\nTime (UTC): {obj.created_at.isoformat()}\n"
+    )
+    subject = f"[AGRF Public Diplomat] {obj.track} — {obj.name}"
+    logging.info("Ambassador submission stored id=%s track=%s", obj.id, obj.track)
+    return SubmissionAck(id=obj.id, mailto=build_mailto(subject, body))
+
+
+@api_router.get("/ambassador-application", response_model=List[AmbassadorApplication])
+async def list_ambassador_applications():
+    docs = await db.ambassador_applications.find().sort("created_at", -1).to_list(500)
+    return [AmbassadorApplication(**d) for d in docs]
 
 
 app.include_router(api_router)

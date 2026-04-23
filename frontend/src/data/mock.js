@@ -75,11 +75,11 @@ export const welcomeNotes = [
 ];
 
 export const executiveBoard = [
-  { id: 1, name: "Jace Owie", title: "President & Chairman", region: "Global", image: "https://images.unsplash.com/photo-1556484687-30636164638b", email: "info@globerelations.org", linkedin: "https://www.linkedin.com/in/uyi-jace-owie-3b02bb101/" },
-  { id: 2, name: "Terryann Talbert", title: "First Secretary General", region: "United States", image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca", email: "info@globerelations.org", linkedin: "#" },
-  { id: 3, name: "Anita Johnson", title: "Programs & Engagements", region: "United States", image: "https://images.pexels.com/photos/8423008/pexels-photo-8423008.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", email: "info@globerelations.org", linkedin: "#" },
-  { id: 4, name: "Jerry Owie", title: "National Project Lead & Project Director", region: "United States", image: "https://images.pexels.com/photos/28100865/pexels-photo-28100865.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", email: "info@globerelations.org", linkedin: "#" },
-  { id: 5, name: "Vincent Idele-iyen", title: "European Director", region: "Europe", image: "https://images.pexels.com/photos/10484479/pexels-photo-10484479.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940", email: "info@globerelations.org", linkedin: "#" }
+  { id: 1, name: "Jace Owie", title: "President & Chairman", region: "Global", image: "https://images.unsplash.com/photo-1573166364839-1bfe9196c23e", email: "info@globerelations.org", linkedin: "https://www.linkedin.com/in/uyi-jace-owie-3b02bb101/" },
+  { id: 2, name: "Terryann Talbert", title: "First Secretary General", region: "United States", image: "https://images.unsplash.com/photo-1573167507387-6b4b98cb7c13", email: "info@globerelations.org", linkedin: "#" },
+  { id: 3, name: "Anita Johnson", title: "Programs & Engagements", region: "United States", image: "https://images.unsplash.com/photo-1573164574572-cb89e39749b4", email: "info@globerelations.org", linkedin: "#" },
+  { id: 4, name: "Jerry Owie", title: "National Project Lead & Project Director", region: "United States", image: "https://images.pexels.com/photos/1181435/pexels-photo-1181435.jpeg", email: "info@globerelations.org", linkedin: "#" },
+  { id: 5, name: "Vincent Idele-iyen", title: "European Director", region: "Europe", image: "https://images.pexels.com/photos/7433853/pexels-photo-7433853.jpeg", email: "info@globerelations.org", linkedin: "#" }
 ];
 
 export const whatWeDo = [
@@ -203,7 +203,7 @@ export const partners = [
 export const LOGO_URL = "https://customer-assets.emergentagent.com/job_agrf-global-bridge/artifacts/vs4dhuee_cropped_circle_image%20%2810%29.png";
 
 export const whereWeWork = [
-  { region: "United States", flag: "US", blurb: "Active in Washington D.C., New York, New Jersey, Maryland and across the United States — housing, healthcare, youth, crisis response and community leadership.", image: "https://images.unsplash.com/photo-1713098965471-d324f294a71d?crop=entropy&cs=srgb&fm=jpg&q=85" },
+  { region: "United States", flag: "US", blurb: "Active in Washington D.C., New York, New Jersey, Maryland and across the United States — housing, healthcare, youth, crisis response and community leadership.", image: "https://images.unsplash.com/photo-1521790797524-b2497295b8a0" },
   { region: "Canada", flag: "CA", blurb: "Cross-border cultural exchanges, newcomer integration and skilled-worker apprenticeships.", image: "https://images.pexels.com/photos/36729916/pexels-photo-36729916.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
   { region: "Europe", flag: "EU", blurb: "Heritage protection, migration dialogue and intercultural policy with partners in Italy, Germany, Netherlands and Switzerland.", image: "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?crop=entropy&cs=srgb&fm=jpg&q=85" },
   { region: "Africa", flag: "AF", blurb: "Clean water, biodiversity, entrepreneurship and youth empowerment across Sub-Saharan communities.", image: "https://images.pexels.com/photos/28101461/pexels-photo-28101461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" }
@@ -289,9 +289,11 @@ export const navItems = [
   { label: "Where We Work", anchor: "#where-we-work", children: ["United States", "Canada", "Europe", "Africa"] },
   { label: "Film & Media", anchor: "#film-media", children: ["Featured Productions", "Immigration Documentary"] },
   { label: "Youth Succeed", anchor: "/youth-succeed-center", children: ["Open House Project", "Mentorship", "Talent Development", "Get Involved"] },
+  { label: "Cultural Exchange", anchor: "/cultural-exchange", children: ["Overview", "Mentorship", "Global Reach", "Apply"] },
   { label: "Academic", anchor: "#academic", children: ["America Global Citizen College"] },
   { label: "News", anchor: "#news", children: ["Stories", "Publications"] },
-  { label: "Get Involved", anchor: "#get-involved", children: ["Volunteer", "Donate", "Partner"] }
+  { label: "Careers", anchor: "/careers", children: ["Volunteer Application", "Open Roles"] },
+  { label: "Get Involved", anchor: "#get-involved", children: ["Volunteer", "Partner", "Ambassador"] }
 ];
 
 export const stats = [
@@ -397,3 +399,94 @@ export const socialLinks = {
 export const DONATION_URL = "https://www.paypal.com/donate/?hosted_button_id=UGWUFLRFJ54ZG";
 
 export const CHARITY_ID = "AMERICA GLOBAL RELATIONS FOUNDATION: A USA REGISTERED CHARITY CORPORATION — 0451160952";
+
+export const AMBASSADOR_EMAILS = ["info@globerelations.org", "info@grfus.org"];
+
+export const careersPage = {
+  heroImage: "https://images.unsplash.com/photo-1542323228-002ac256e7b8",
+  title: "Careers & Volunteer Opportunities",
+  eyebrow: "Join Our Movement",
+  notHiringNotice: "At this time, AGRF is not actively hiring for paid positions. However, we are always open to welcoming passionate volunteers from around the world to join our mission. Apply below and our team will be in touch.",
+  volunteerModes: ["In-Person", "Online", "Both"]
+};
+
+export const culturalExchange = {
+  heroImage: "https://images.unsplash.com/photo-1557734864-c78b6dfef1b1",
+  eyebrow: "A Global Initiative by AGRF",
+  title: "Cultural Exchange & Leadership Mentorship Tour Programs",
+  overview: "At America Global Relations Foundation (AGRF), we believe that exposure, experience, and connection are essential to shaping the next generation of global leaders. Our Cultural Exchange and Leadership Mentorship Tour Programs are designed to provide young people and emerging leaders with immersive international experiences that foster leadership, cross-cultural understanding, and global collaboration.",
+  mission: "To empower youth and young professionals through transformative global experiences that build leadership capacity, cultural awareness, and meaningful international networks.",
+  offerings: [
+    {
+      title: "Cultural Exchange Experiences",
+      body: "Participants engage directly with diverse cultures, traditions, and communities across different countries. These exchanges promote:",
+      bullets: [
+        "Mutual understanding and respect",
+        "Cultural appreciation and global awareness",
+        "International friendships and collaboration"
+      ]
+    },
+    {
+      title: "Leadership Mentorship",
+      body: "Our programs connect participants with experienced leaders, policymakers, and professionals who provide:",
+      bullets: [
+        "One-on-one mentorship and guidance",
+        "Leadership development training",
+        "Insights into global governance, diplomacy, and innovation"
+      ]
+    },
+    {
+      title: "Institutional Visits & Engagements",
+      body: "Participants gain firsthand exposure to:",
+      bullets: [
+        "Government institutions and policy environments",
+        "International organizations and development agencies",
+        "Academic and innovation hubs"
+      ]
+    },
+    {
+      title: "Networking Opportunities",
+      body: "Build lasting connections with:",
+      bullets: [
+        "Global youth leaders",
+        "Industry professionals",
+        "Change-makers and influencers"
+      ]
+    }
+  ],
+  highlights: [
+    "Curated international travel experiences",
+    "Leadership workshops and seminars",
+    "Cross-cultural dialogue sessions",
+    "Community engagement and service projects",
+    "Certificates of participation and recognition"
+  ],
+  participants: [
+    "Youth leaders and aspiring changemakers",
+    "Students and young professionals",
+    "Community advocates and innovators",
+    "Organizations seeking global exposure for their members"
+  ],
+  whyItMatters: [
+    "Lead with confidence and cultural intelligence",
+    "Contribute to global development goals",
+    "Drive positive change in their communities"
+  ],
+  regions: ["The United States", "Europe", "Africa", "Other strategic international destinations"],
+  tagline: "Experience the World. Lead the Future."
+};
+
+export const ambassadorFeature = {
+  image: "https://images.unsplash.com/photo-1715610258704-e8f9f5710fe0",
+  eyebrow: "Global Voice Initiative",
+  title: "Become a Public Diplomat or Global Youth Voice Ambassador",
+  body: "Join America Global Relations Foundation (AGRF) as a Global Youth Voice Ambassador or AGRF Public Diplomat. Take a Global Leadership Course at the America Global Citizen College and receive your Ambassadorial certificate and awards from America. We also welcome nominations for individuals actively raising awareness on pressing social issues and advocating for the voiceless.",
+  bullets: [
+    "Complete a Global Leadership Course at America Global Citizen College",
+    "Receive your Ambassadorial certificate and awards from America",
+    "Raise awareness on pressing social issues",
+    "Advocate for the voiceless"
+  ],
+  tagline: "Be a voice for global change.",
+  emails: ["info@globerelations.org", "info@grfus.org"]
+};

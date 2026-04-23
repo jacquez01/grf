@@ -16,9 +16,12 @@ import Partners from "./components/site/Partners";
 import ProposalSection from "./components/site/ProposalSection";
 import Campaigns from "./components/site/Campaigns";
 import FilmMedia from "./components/site/FilmMedia";
+import AmbassadorFeature from "./components/site/AmbassadorFeature";
 import Contact from "./components/site/Contact";
 import Footer from "./components/site/Footer";
 import YouthSucceedCenter from "./pages/YouthSucceedCenter";
+import Careers from "./pages/Careers";
+import CulturalExchange from "./pages/CulturalExchange";
 
 const Home = () => {
   return (
@@ -50,6 +53,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/youth-succeed-center" element={<YouthSucceedCenter />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/cultural-exchange" element={<CulturalExchange />} />
         </Routes>
       </BrowserRouter>
     </div>

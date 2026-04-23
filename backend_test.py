@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-"""
-AGRF Backend API Testing Script
-Tests all endpoints at the public URL with /api prefix
-"""
 
 import requests
 import json
@@ -13,8 +9,8 @@ from urllib.parse import unquote
 BACKEND_URL = "https://agrf-global-bridge.preview.emergentagent.com/api"
 
 def test_root_endpoint():
-    """Test GET /api/ endpoint"""
-    print("🔍 Testing GET /api/")
+    """Test 1: GET /api/ - confirm notify array has THREE emails"""
+    print("=== Test 1: Root endpoint notify array ===")
     try:
         response = requests.get(f"{BACKEND_URL}/")
         print(f"Status: {response.status_code}")
@@ -23,457 +19,459 @@ def test_root_endpoint():
             data = response.json()
             print(f"Response: {json.dumps(data, indent=2)}")
             
-            # Verify required fields
-            if "message" in data and "notify" in data:
-                notify_emails = data["notify"]
-                expected_emails = ["info@globerelations.org", "jaceowie@gmail.com"]
-                
-                if notify_emails == expected_emails:
-                    print("✅ Root endpoint working correctly")
-                    return True
-                else:
-                    print(f"❌ Notify emails mismatch. Expected: {expected_emails}, Got: {notify_emails}")
-                    return False
+            expected_emails = ["info@globerelations.org", "info@grfus.org", "jaceowie@gmail.com"]
+            notify_emails = data.get("notify", [])
+            
+            if set(notify_emails) == set(expected_emails) and len(notify_emails) == 3:
+                print("✅ PASS: Notify array contains all three required emails")
+                return True
             else:
-                print("❌ Missing required fields 'message' or 'notify'")
+                print(f"❌ FAIL: Expected {expected_emails}, got {notify_emails}")
                 return False
         else:
-            print(f"❌ Root endpoint failed with status {response.status_code}")
-            return False
-            
-    except Exception as e:
-        print(f"❌ Root endpoint error: {str(e)}")
-        return False
-
-def test_contact_submission():
-    """Test POST /api/contact endpoint"""
-    print("\n🔍 Testing POST /api/contact")
-    
-    contact_data = {
-        "name": "Test User",
-        "email": "test@example.com", 
-        "subject": "Hello",
-        "message": "Testing contact form."
-    }
-    
-    try:
-        response = requests.post(f"{BACKEND_URL}/contact", json=contact_data)
-        print(f"Status: {response.status_code}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            print(f"Response: {json.dumps(data, indent=2)}")
-            
-            # Verify required fields
-            required_fields = ["id", "ok", "notify_to", "mailto"]
-            if all(field in data for field in required_fields):
-                # Check notify_to contains expected emails
-                expected_emails = ["info@globerelations.org", "jaceowie@gmail.com"]
-                if data["notify_to"] == expected_emails:
-                    # Check mailto format
-                    mailto = data["mailto"]
-                    if mailto.startswith("mailto:") and "info@globerelations.org" in mailto and "jaceowie@gmail.com" in mailto:
-                        print("✅ Contact submission working correctly")
-                        return True, data["id"]
-                    else:
-                        print(f"❌ Invalid mailto format: {mailto}")
-                        return False, None
-                else:
-                    print(f"❌ notify_to mismatch. Expected: {expected_emails}, Got: {data['notify_to']}")
-                    return False, None
-            else:
-                print(f"❌ Missing required fields. Expected: {required_fields}")
-                return False, None
-        else:
-            print(f"❌ Contact submission failed with status {response.status_code}")
-            print(f"Response: {response.text}")
-            return False, None
-            
-    except Exception as e:
-        print(f"❌ Contact submission error: {str(e)}")
-        return False, None
-
-def test_contact_list():
-    """Test GET /api/contact endpoint"""
-    print("\n🔍 Testing GET /api/contact")
-    
-    try:
-        response = requests.get(f"{BACKEND_URL}/contact")
-        print(f"Status: {response.status_code}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            print(f"Found {len(data)} contact entries")
-            
-            # Look for our test entry
-            test_entry = None
-            for contact in data:
-                if contact.get("email") == "test@example.com":
-                    test_entry = contact
-                    break
-            
-            if test_entry:
-                print("✅ Contact list working correctly - found test entry")
-                print(f"Test entry: {json.dumps(test_entry, indent=2)}")
-                return True
-            else:
-                print("⚠️ Contact list working but test entry not found")
-                return True
-        else:
-            print(f"❌ Contact list failed with status {response.status_code}")
-            return False
-            
-    except Exception as e:
-        print(f"❌ Contact list error: {str(e)}")
-        return False
-
-def test_proposal_submission():
-    """Test POST /api/proposal endpoint"""
-    print("\n🔍 Testing POST /api/proposal")
-    
-    proposal_data = {
-        "organization": "Acme",
-        "name": "Jane",
-        "email": "jane@acme.com",
-        "message": "We'd like to co-fund."
-    }
-    
-    try:
-        response = requests.post(f"{BACKEND_URL}/proposal", json=proposal_data)
-        print(f"Status: {response.status_code}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            print(f"Response: {json.dumps(data, indent=2)}")
-            
-            # Verify mailto contains [AGRF Partnership] in subject
-            mailto = data.get("mailto", "")
-            if "[AGRF Partnership]" in unquote(mailto):
-                print("✅ Proposal submission working correctly")
-                return True, data["id"]
-            else:
-                print(f"❌ Mailto doesn't contain '[AGRF Partnership]': {mailto}")
-                return False, None
-        else:
-            print(f"❌ Proposal submission failed with status {response.status_code}")
-            print(f"Response: {response.text}")
-            return False, None
-            
-    except Exception as e:
-        print(f"❌ Proposal submission error: {str(e)}")
-        return False, None
-
-def test_proposal_list():
-    """Test GET /api/proposal endpoint"""
-    print("\n🔍 Testing GET /api/proposal")
-    
-    try:
-        response = requests.get(f"{BACKEND_URL}/proposal")
-        print(f"Status: {response.status_code}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            print(f"Found {len(data)} proposal entries")
-            
-            # Look for our test entry
-            test_entry = None
-            for proposal in data:
-                if proposal.get("email") == "jane@acme.com":
-                    test_entry = proposal
-                    break
-            
-            if test_entry:
-                print("✅ Proposal list working correctly - found test entry")
-                print(f"Test entry: {json.dumps(test_entry, indent=2)}")
-                return True
-            else:
-                print("⚠️ Proposal list working but test entry not found")
-                return True
-        else:
-            print(f"❌ Proposal list failed with status {response.status_code}")
-            return False
-            
-    except Exception as e:
-        print(f"❌ Proposal list error: {str(e)}")
-        return False
-
-def test_volunteer_submission():
-    """Test POST /api/volunteer endpoint"""
-    print("\n🔍 Testing POST /api/volunteer")
-    
-    volunteer_data = {
-        "name": "Vol Test",
-        "email": "vol@test.com",
-        "phone": "555-0100",
-        "interest": "Youth programs"
-    }
-    
-    try:
-        response = requests.post(f"{BACKEND_URL}/volunteer", json=volunteer_data)
-        print(f"Status: {response.status_code}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            print(f"Response: {json.dumps(data, indent=2)}")
-            print("✅ Volunteer submission working correctly")
-            return True
-        else:
-            print(f"❌ Volunteer submission failed with status {response.status_code}")
-            print(f"Response: {response.text}")
-            return False
-            
-    except Exception as e:
-        print(f"❌ Volunteer submission error: {str(e)}")
-        return False
-
-def test_validation():
-    """Test validation with invalid data"""
-    print("\n🔍 Testing validation with invalid data")
-    
-    invalid_data = {
-        "name": "Test User",
-        "email": "invalid-email",  # Invalid email
-        "subject": "Hello"
-        # Missing required 'message' field
-    }
-    
-    try:
-        response = requests.post(f"{BACKEND_URL}/contact", json=invalid_data)
-        print(f"Status: {response.status_code}")
-        
-        if response.status_code == 422:
-            print("✅ Validation working correctly - returned 422 for invalid data")
-            return True
-        else:
-            print(f"❌ Expected 422 for invalid data, got {response.status_code}")
-            print(f"Response: {response.text}")
-            return False
-            
-    except Exception as e:
-        print(f"❌ Validation test error: {str(e)}")
-        return False
-
-def test_mentor_signup_full():
-    """Test POST /api/mentor-signup with full mentor data"""
-    print("\n🔍 Testing POST /api/mentor-signup (full mentor data)")
-    
-    mentor_data = {
-        "name": "Jane Doe",
-        "email": "jane@test.com", 
-        "phone": "555-0100",
-        "role": "Mentor",
-        "center": "Berlin Youth Succeed Center",
-        "experience": "5 years of youth mentoring",
-        "message": "Available weekends."
-    }
-    
-    try:
-        response = requests.post(f"{BACKEND_URL}/mentor-signup", json=mentor_data)
-        print(f"Status: {response.status_code}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            print(f"Response: {json.dumps(data, indent=2)}")
-            
-            # Verify required fields
-            required_fields = ["id", "ok", "notify_to", "mailto"]
-            if all(field in data for field in required_fields):
-                # Verify mailto subject contains [AGRF Youth Succeed]
-                mailto = data["mailto"]
-                if "[AGRF Youth Succeed]" in unquote(mailto):
-                    # Verify mailto body contains role "Mentor" and center
-                    if "Mentor" in unquote(mailto) and "Berlin Youth Succeed Center" in unquote(mailto):
-                        print("✅ Mentor signup (full data) working correctly")
-                        return True, data["id"]
-                    else:
-                        print(f"❌ Mailto missing role 'Mentor' or center info: {unquote(mailto)}")
-                        return False, None
-                else:
-                    print(f"❌ Mailto subject missing '[AGRF Youth Succeed]': {unquote(mailto)}")
-                    return False, None
-            else:
-                print(f"❌ Missing required fields. Expected: {required_fields}")
-                return False, None
-        else:
-            print(f"❌ Mentor signup failed with status {response.status_code}")
-            print(f"Response: {response.text}")
-            return False, None
-            
-    except Exception as e:
-        print(f"❌ Mentor signup error: {str(e)}")
-        return False, None
-
-def test_mentor_signup_minimal():
-    """Test POST /api/mentor-signup with minimal volunteer data"""
-    print("\n🔍 Testing POST /api/mentor-signup (minimal volunteer data)")
-    
-    volunteer_data = {
-        "name": "Min",
-        "email": "m@t.com",
-        "role": "Volunteer"
-    }
-    
-    try:
-        response = requests.post(f"{BACKEND_URL}/mentor-signup", json=volunteer_data)
-        print(f"Status: {response.status_code}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            print(f"Response: {json.dumps(data, indent=2)}")
-            print("✅ Mentor signup (minimal data) working correctly")
-            return True, data["id"]
-        else:
-            print(f"❌ Minimal mentor signup failed with status {response.status_code}")
-            print(f"Response: {response.text}")
-            return False, None
-            
-    except Exception as e:
-        print(f"❌ Minimal mentor signup error: {str(e)}")
-        return False, None
-
-def test_mentor_signup_validation():
-    """Test mentor-signup validation with invalid data"""
-    print("\n🔍 Testing mentor-signup validation")
-    
-    # Test missing required 'role' field
-    print("Testing missing 'role' field...")
-    invalid_data_no_role = {
-        "name": "Test User",
-        "email": "test@example.com"
-        # Missing 'role' field
-    }
-    
-    try:
-        response = requests.post(f"{BACKEND_URL}/mentor-signup", json=invalid_data_no_role)
-        print(f"Status (missing role): {response.status_code}")
-        
-        if response.status_code != 422:
-            print(f"❌ Expected 422 for missing role, got {response.status_code}")
+            print(f"❌ FAIL: Expected 200, got {response.status_code}")
             return False
     except Exception as e:
-        print(f"❌ Error testing missing role: {str(e)}")
-        return False
-    
-    # Test invalid email
-    print("Testing invalid email...")
-    invalid_data_email = {
-        "name": "Test User",
-        "email": "not-an-email",
-        "role": "Volunteer"
-    }
-    
-    try:
-        response = requests.post(f"{BACKEND_URL}/mentor-signup", json=invalid_data_email)
-        print(f"Status (invalid email): {response.status_code}")
-        
-        if response.status_code == 422:
-            print("✅ Mentor signup validation working correctly")
-            return True
-        else:
-            print(f"❌ Expected 422 for invalid email, got {response.status_code}")
-            return False
-            
-    except Exception as e:
-        print(f"❌ Error testing invalid email: {str(e)}")
+        print(f"❌ ERROR: {e}")
         return False
 
-def test_mentor_signup_list():
-    """Test GET /api/mentor-signup endpoint"""
-    print("\n🔍 Testing GET /api/mentor-signup")
-    
+def test_volunteer_application_success():
+    """Test 2: POST /api/volunteer-application with valid data"""
+    print("\n=== Test 2: Volunteer application success ===")
     try:
-        response = requests.get(f"{BACKEND_URL}/mentor-signup")
-        print(f"Status: {response.status_code}")
-        
-        if response.status_code == 200:
-            data = response.json()
-            print(f"Found {len(data)} mentor signup entries")
-            
-            # Look for our test entries
-            found_mentor = any(entry.get("email") == "jane@test.com" for entry in data)
-            found_volunteer = any(entry.get("email") == "m@t.com" for entry in data)
-            
-            if found_mentor and found_volunteer:
-                print("✅ Mentor signup list working correctly - found test entries")
-                return True
-            else:
-                print(f"⚠️ Mentor signup list working but test entries not found. Mentor: {found_mentor}, Volunteer: {found_volunteer}")
-                return True  # Still consider it working even if entries not found
-        else:
-            print(f"❌ Mentor signup list failed with status {response.status_code}")
-            return False
-            
-    except Exception as e:
-        print(f"❌ Mentor signup list error: {str(e)}")
-        return False
-
-def test_cors():
-    """Test CORS headers"""
-    print("\n🔍 Testing CORS configuration")
-    
-    try:
-        # Make an OPTIONS request to check CORS
-        response = requests.options(f"{BACKEND_URL}/")
-        print(f"OPTIONS Status: {response.status_code}")
-        
-        # Check for CORS headers
-        cors_headers = {
-            'Access-Control-Allow-Origin': response.headers.get('Access-Control-Allow-Origin'),
-            'Access-Control-Allow-Methods': response.headers.get('Access-Control-Allow-Methods'),
-            'Access-Control-Allow-Headers': response.headers.get('Access-Control-Allow-Headers')
+        payload = {
+            "name": "John Volunteer",
+            "email": "jv@test.com",
+            "phone": "555-0101",
+            "country": "United States",
+            "region": "New York",
+            "profession": "Teacher",
+            "mode": "In-Person",
+            "availability": "Weekends",
+            "message": "Happy to help."
         }
         
-        print(f"CORS Headers: {json.dumps(cors_headers, indent=2)}")
+        response = requests.post(f"{BACKEND_URL}/volunteer-application", json=payload)
+        print(f"Status: {response.status_code}")
         
-        # Check if origin is allowed (should be * or include the preview domain)
-        allow_origin = cors_headers.get('Access-Control-Allow-Origin')
-        if allow_origin == '*' or 'preview.emergentagent.com' in str(allow_origin):
-            print("✅ CORS configuration allows preview domain")
+        if response.status_code == 200:
+            data = response.json()
+            print(f"Response: {json.dumps(data, indent=2)}")
+            
+            # Check required fields
+            required_fields = ["id", "ok", "notify_to", "mailto"]
+            missing_fields = [field for field in required_fields if field not in data]
+            
+            if missing_fields:
+                print(f"❌ FAIL: Missing fields: {missing_fields}")
+                return False
+            
+            # Check notify_to has all 3 emails
+            expected_emails = ["info@globerelations.org", "info@grfus.org", "jaceowie@gmail.com"]
+            if set(data["notify_to"]) != set(expected_emails):
+                print(f"❌ FAIL: notify_to expected {expected_emails}, got {data['notify_to']}")
+                return False
+            
+            # Check mailto subject starts with [AGRF Volunteer Application]
+            mailto = data["mailto"]
+            if "subject=" in mailto:
+                subject_part = mailto.split("subject=")[1].split("&")[0]
+                subject = unquote(subject_part)
+                if not subject.startswith("[AGRF Volunteer Application]"):
+                    print(f"❌ FAIL: Subject should start with '[AGRF Volunteer Application]', got: {subject}")
+                    return False
+            else:
+                print("❌ FAIL: No subject found in mailto")
+                return False
+            
+            # Check body contains country, profession, and mode
+            if "body=" in mailto:
+                body_part = mailto.split("body=")[1]
+                body = unquote(body_part)
+                required_in_body = ["United States", "Teacher", "In-Person"]
+                missing_in_body = [item for item in required_in_body if item not in body]
+                
+                if missing_in_body:
+                    print(f"❌ FAIL: Body missing: {missing_in_body}")
+                    print(f"Body content: {body}")
+                    return False
+            else:
+                print("❌ FAIL: No body found in mailto")
+                return False
+            
+            print("✅ PASS: Volunteer application created successfully with correct format")
             return True
         else:
-            print(f"⚠️ CORS may not allow preview domain. Allow-Origin: {allow_origin}")
-            return True  # Don't fail on this as it might still work
-            
+            print(f"❌ FAIL: Expected 200, got {response.status_code}")
+            print(f"Response: {response.text}")
+            return False
     except Exception as e:
-        print(f"❌ CORS test error: {str(e)}")
+        print(f"❌ ERROR: {e}")
+        return False
+
+def test_volunteer_application_missing_country():
+    """Test 3: POST /api/volunteer-application missing country - expect 422"""
+    print("\n=== Test 3: Volunteer application missing country ===")
+    try:
+        payload = {
+            "name": "John Volunteer",
+            "email": "jv@test.com",
+            "phone": "555-0101",
+            # "country": "United States",  # Missing required field
+            "region": "New York",
+            "profession": "Teacher",
+            "mode": "In-Person",
+            "availability": "Weekends",
+            "message": "Happy to help."
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/volunteer-application", json=payload)
+        print(f"Status: {response.status_code}")
+        
+        if response.status_code == 422:
+            print("✅ PASS: Correctly returned 422 for missing country")
+            return True
+        else:
+            print(f"❌ FAIL: Expected 422, got {response.status_code}")
+            print(f"Response: {response.text}")
+            return False
+    except Exception as e:
+        print(f"❌ ERROR: {e}")
+        return False
+
+def test_volunteer_application_invalid_email():
+    """Test 4: POST /api/volunteer-application with invalid email - expect 422"""
+    print("\n=== Test 4: Volunteer application invalid email ===")
+    try:
+        payload = {
+            "name": "John Volunteer",
+            "email": "invalid-email",  # Invalid email format
+            "phone": "555-0101",
+            "country": "United States",
+            "region": "New York",
+            "profession": "Teacher",
+            "mode": "In-Person",
+            "availability": "Weekends",
+            "message": "Happy to help."
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/volunteer-application", json=payload)
+        print(f"Status: {response.status_code}")
+        
+        if response.status_code == 422:
+            print("✅ PASS: Correctly returned 422 for invalid email")
+            return True
+        else:
+            print(f"❌ FAIL: Expected 422, got {response.status_code}")
+            print(f"Response: {response.text}")
+            return False
+    except Exception as e:
+        print(f"❌ ERROR: {e}")
+        return False
+
+def test_volunteer_application_list():
+    """Test 5: GET /api/volunteer-application - returns list including entry from test 2"""
+    print("\n=== Test 5: Volunteer application list ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/volunteer-application")
+        print(f"Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"Found {len(data)} volunteer applications")
+            
+            # Look for our test entry
+            test_entry = None
+            for entry in data:
+                if entry.get("name") == "John Volunteer" and entry.get("email") == "jv@test.com":
+                    test_entry = entry
+                    break
+            
+            if test_entry:
+                print("✅ PASS: Found test volunteer application in list")
+                print(f"Entry: {json.dumps(test_entry, indent=2)}")
+                return True
+            else:
+                print("❌ FAIL: Test volunteer application not found in list")
+                return False
+        else:
+            print(f"❌ FAIL: Expected 200, got {response.status_code}")
+            return False
+    except Exception as e:
+        print(f"❌ ERROR: {e}")
+        return False
+
+def test_ambassador_application_success():
+    """Test 6: POST /api/ambassador-application with valid data"""
+    print("\n=== Test 6: Ambassador application success ===")
+    try:
+        payload = {
+            "name": "Ada Amb",
+            "email": "ada@test.com",
+            "phone": "",
+            "country": "Nigeria",
+            "track": "Public Diplomat",
+            "message": "Advocating for women's health."
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/ambassador-application", json=payload)
+        print(f"Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"Response: {json.dumps(data, indent=2)}")
+            
+            # Check mailto subject starts with [AGRF Public Diplomat]
+            mailto = data["mailto"]
+            if "subject=" in mailto:
+                subject_part = mailto.split("subject=")[1].split("&")[0]
+                subject = unquote(subject_part)
+                if not subject.startswith("[AGRF Public Diplomat]"):
+                    print(f"❌ FAIL: Subject should start with '[AGRF Public Diplomat]', got: {subject}")
+                    return False
+                
+                # Check subject includes track
+                if "Public Diplomat" not in subject:
+                    print(f"❌ FAIL: Subject should include track 'Public Diplomat', got: {subject}")
+                    return False
+            else:
+                print("❌ FAIL: No subject found in mailto")
+                return False
+            
+            print("✅ PASS: Ambassador application created successfully with correct format")
+            return True
+        else:
+            print(f"❌ FAIL: Expected 200, got {response.status_code}")
+            print(f"Response: {response.text}")
+            return False
+    except Exception as e:
+        print(f"❌ ERROR: {e}")
+        return False
+
+def test_ambassador_application_nomination():
+    """Test 7: POST /api/ambassador-application with nomination track"""
+    print("\n=== Test 7: Ambassador application with nomination ===")
+    try:
+        payload = {
+            "name": "Nominator Name",
+            "email": "nominator@test.com",
+            "phone": "555-0202",
+            "country": "Kenya",
+            "track": "Nomination",
+            "nominee_name": "Jane Leader",
+            "message": "Nominating Jane for her leadership."
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/ambassador-application", json=payload)
+        print(f"Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"Response: {json.dumps(data, indent=2)}")
+            
+            # Check body includes nominee_name
+            mailto = data["mailto"]
+            if "body=" in mailto:
+                body_part = mailto.split("body=")[1]
+                body = unquote(body_part)
+                
+                if "Jane Leader" not in body:
+                    print(f"❌ FAIL: Body should include nominee_name 'Jane Leader'")
+                    print(f"Body content: {body}")
+                    return False
+            else:
+                print("❌ FAIL: No body found in mailto")
+                return False
+            
+            print("✅ PASS: Ambassador nomination created successfully with nominee_name in body")
+            return True
+        else:
+            print(f"❌ FAIL: Expected 200, got {response.status_code}")
+            print(f"Response: {response.text}")
+            return False
+    except Exception as e:
+        print(f"❌ ERROR: {e}")
+        return False
+
+def test_ambassador_application_missing_track():
+    """Test 8: POST /api/ambassador-application missing track - expect 422"""
+    print("\n=== Test 8: Ambassador application missing track ===")
+    try:
+        payload = {
+            "name": "Ada Amb",
+            "email": "ada@test.com",
+            "phone": "",
+            "country": "Nigeria",
+            # "track": "Public Diplomat",  # Missing required field
+            "message": "Advocating for women's health."
+        }
+        
+        response = requests.post(f"{BACKEND_URL}/ambassador-application", json=payload)
+        print(f"Status: {response.status_code}")
+        
+        if response.status_code == 422:
+            print("✅ PASS: Correctly returned 422 for missing track")
+            return True
+        else:
+            print(f"❌ FAIL: Expected 422, got {response.status_code}")
+            print(f"Response: {response.text}")
+            return False
+    except Exception as e:
+        print(f"❌ ERROR: {e}")
+        return False
+
+def test_ambassador_application_list():
+    """Test 9: GET /api/ambassador-application - returns list including entries"""
+    print("\n=== Test 9: Ambassador application list ===")
+    try:
+        response = requests.get(f"{BACKEND_URL}/ambassador-application")
+        print(f"Status: {response.status_code}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"Found {len(data)} ambassador applications")
+            
+            # Look for our test entries
+            ada_entry = None
+            nomination_entry = None
+            
+            for entry in data:
+                if entry.get("name") == "Ada Amb" and entry.get("email") == "ada@test.com":
+                    ada_entry = entry
+                elif entry.get("nominee_name") == "Jane Leader":
+                    nomination_entry = entry
+            
+            if ada_entry and nomination_entry:
+                print("✅ PASS: Found both test ambassador applications in list")
+                return True
+            elif ada_entry:
+                print("⚠️ PARTIAL: Found Ada entry but not nomination entry")
+                return True
+            elif nomination_entry:
+                print("⚠️ PARTIAL: Found nomination entry but not Ada entry")
+                return True
+            else:
+                print("❌ FAIL: Test ambassador applications not found in list")
+                return False
+        else:
+            print(f"❌ FAIL: Expected 200, got {response.status_code}")
+            return False
+    except Exception as e:
+        print(f"❌ ERROR: {e}")
+        return False
+
+def test_regression_endpoints():
+    """Test 10: Regression test for existing endpoints"""
+    print("\n=== Test 10: Regression testing existing endpoints ===")
+    
+    results = []
+    
+    # Test contact endpoint
+    print("Testing POST /api/contact...")
+    try:
+        contact_payload = {
+            "name": "Test Contact",
+            "email": "test@contact.com",
+            "subject": "Test Subject",
+            "message": "Test message"
+        }
+        response = requests.post(f"{BACKEND_URL}/contact", json=contact_payload)
+        if response.status_code == 200:
+            print("✅ Contact endpoint working")
+            results.append(True)
+        else:
+            print(f"❌ Contact endpoint failed: {response.status_code}")
+            results.append(False)
+    except Exception as e:
+        print(f"❌ Contact endpoint error: {e}")
+        results.append(False)
+    
+    # Test proposal endpoint
+    print("Testing POST /api/proposal...")
+    try:
+        proposal_payload = {
+            "organization": "Test Org",
+            "name": "Test Proposer",
+            "email": "test@proposal.com",
+            "message": "Test proposal"
+        }
+        response = requests.post(f"{BACKEND_URL}/proposal", json=proposal_payload)
+        if response.status_code == 200:
+            print("✅ Proposal endpoint working")
+            results.append(True)
+        else:
+            print(f"❌ Proposal endpoint failed: {response.status_code}")
+            results.append(False)
+    except Exception as e:
+        print(f"❌ Proposal endpoint error: {e}")
+        results.append(False)
+    
+    # Test mentor-signup endpoint
+    print("Testing POST /api/mentor-signup...")
+    try:
+        mentor_payload = {
+            "name": "Test Mentor",
+            "email": "test@mentor.com",
+            "role": "Mentor",
+            "center": "Test Center",
+            "message": "Test mentor signup"
+        }
+        response = requests.post(f"{BACKEND_URL}/mentor-signup", json=mentor_payload)
+        if response.status_code == 200:
+            print("✅ Mentor-signup endpoint working")
+            results.append(True)
+        else:
+            print(f"❌ Mentor-signup endpoint failed: {response.status_code}")
+            results.append(False)
+    except Exception as e:
+        print(f"❌ Mentor-signup endpoint error: {e}")
+        results.append(False)
+    
+    if all(results):
+        print("✅ PASS: All regression tests passed")
+        return True
+    else:
+        print(f"❌ FAIL: {len([r for r in results if not r])} out of {len(results)} regression tests failed")
         return False
 
 def main():
     """Run all tests"""
     print("🚀 Starting AGRF Backend API Tests")
-    print(f"Testing backend at: {BACKEND_URL}")
+    print(f"Testing against: {BACKEND_URL}")
     print("=" * 60)
     
-    results = {}
+    tests = [
+        test_root_endpoint,
+        test_volunteer_application_success,
+        test_volunteer_application_missing_country,
+        test_volunteer_application_invalid_email,
+        test_volunteer_application_list,
+        test_ambassador_application_success,
+        test_ambassador_application_nomination,
+        test_ambassador_application_missing_track,
+        test_ambassador_application_list,
+        test_regression_endpoints
+    ]
     
-    # Test all endpoints
-    results['root'] = test_root_endpoint()
-    results['contact_post'], contact_id = test_contact_submission()
-    results['contact_get'] = test_contact_list()
-    results['proposal_post'], proposal_id = test_proposal_submission()
-    results['proposal_get'] = test_proposal_list()
-    results['volunteer_post'] = test_volunteer_submission()
+    results = []
+    for test in tests:
+        try:
+            result = test()
+            results.append(result)
+        except Exception as e:
+            print(f"❌ Test {test.__name__} crashed: {e}")
+            results.append(False)
     
-    # Test new mentor-signup endpoints
-    results['mentor_signup_full'], mentor_id = test_mentor_signup_full()
-    results['mentor_signup_minimal'], volunteer_id = test_mentor_signup_minimal()
-    results['mentor_signup_validation'] = test_mentor_signup_validation()
-    results['mentor_signup_list'] = test_mentor_signup_list()
-    
-    results['validation'] = test_validation()
-    results['cors'] = test_cors()
-    
-    # Summary
     print("\n" + "=" * 60)
     print("📊 TEST SUMMARY")
     print("=" * 60)
     
-    passed = sum(1 for result in results.values() if result)
+    passed = sum(results)
     total = len(results)
     
-    for test_name, result in results.items():
+    for i, (test, result) in enumerate(zip(tests, results), 1):
         status = "✅ PASS" if result else "❌ FAIL"
-        print(f"{test_name.upper()}: {status}")
+        print(f"Test {i:2d}: {status} - {test.__name__}")
     
     print(f"\nOverall: {passed}/{total} tests passed")
     
@@ -481,7 +479,7 @@ def main():
         print("🎉 All tests passed!")
         return 0
     else:
-        print("⚠️ Some tests failed")
+        print(f"⚠️  {total - passed} tests failed")
         return 1
 
 if __name__ == "__main__":

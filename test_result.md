@@ -249,18 +249,126 @@ backend:
           agent: "testing"
           comment: "GET /api/mentor-signup tested successfully. Returns list of mentor signups including test entries with correct structure and timestamps"
 
+  - task: "Volunteer application submission"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "POST /api/volunteer-application tested successfully. Returns 200 with correct response structure including id, ok: true, notify_to array with all 3 emails, and properly formatted mailto link with '[AGRF Volunteer Application]' subject. Body contains country, profession, and mode as required."
+
+  - task: "Volunteer application validation"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Volunteer application validation tested successfully. Returns 422 for missing required 'country' field and invalid email format as expected."
+
+  - task: "Volunteer application listing"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "GET /api/volunteer-application tested successfully. Returns list of volunteer applications including test entry with correct structure and timestamps."
+
+  - task: "Ambassador application submission"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "POST /api/ambassador-application tested successfully. Returns 200 with correct response structure. Mailto subject starts with '[AGRF Public Diplomat]' and includes track as required."
+
+  - task: "Ambassador application nomination"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Ambassador application with nomination track tested successfully. Body correctly includes nominee_name 'Jane Leader' when track is 'Nomination'."
+
+  - task: "Ambassador application validation"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Ambassador application validation tested successfully. Returns 422 for missing required 'track' field as expected."
+
+  - task: "Ambassador application listing"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "GET /api/ambassador-application tested successfully. Returns list of ambassador applications including test entries with correct structure and timestamps."
+
+  - task: "Updated notify array"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Root endpoint GET /api/ tested successfully. Notify array now contains all three required emails: info@globerelations.org, info@grfus.org, jaceowie@gmail.com."
+
+  - task: "Regression testing existing endpoints"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Regression testing completed successfully. All existing endpoints (contact, proposal, mentor-signup) continue to work correctly after new feature additions."
+
 frontend:
   # No frontend testing performed as per instructions
 
 metadata:
   created_by: "testing_agent"
   version: "1.0"
-  test_sequence: 2
+  test_sequence: 3
   run_ui: false
 
 test_plan:
   current_focus:
-    - "All backend endpoints tested and verified including new mentor-signup functionality"
+    - "All new AGRF backend endpoints tested and verified including volunteer-application and ambassador-application functionality"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
@@ -270,3 +378,5 @@ agent_communication:
       message: "Completed comprehensive testing of AGRF FastAPI backend. All 8 endpoints tested successfully: root endpoint, contact submission/listing, proposal submission/listing, volunteer registration, input validation, and CORS configuration. Backend is fully functional and ready for production use."
     - agent: "testing"
       message: "Completed testing of new mentor-signup endpoints. All 4 new mentor-signup related tests passed: full mentor data submission, minimal volunteer data submission, input validation (missing role and invalid email), and mentor signup listing. The mentor-signup endpoint correctly formats mailto links with '[AGRF Youth Succeed]' subject and includes role and center information in the body. All existing endpoints continue to work correctly. Total: 12/12 tests passed."
+    - agent: "testing"
+      message: "Completed comprehensive testing of new AGRF backend endpoints. All 10 tests passed: (1) Root endpoint now has 3 emails in notify array, (2) Volunteer application submission with correct mailto format, (3) Volunteer validation for missing country, (4) Volunteer validation for invalid email, (5) Volunteer application listing, (6) Ambassador application submission with correct subject format, (7) Ambassador nomination with nominee_name in body, (8) Ambassador validation for missing track, (9) Ambassador application listing, (10) Regression testing of existing endpoints. All new volunteer-application and ambassador-application endpoints are working correctly with proper validation and formatting."
