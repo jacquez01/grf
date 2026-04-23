@@ -36,6 +36,7 @@ const Home = () => {
       <ExecutiveBoard />
       <WhereWeWork />
       <FilmMedia />
+      <AmbassadorFeature />
       <Campaigns />
       <Partners />
       <ProposalSection />
