@@ -46,12 +46,9 @@ const Petitions = () => {
     setCreating(true);
     try {
       const { data } = await axios.post(`${API}/petitions`, form);
-      toast.success("Petition created. Share the link to gather signatures.");
+      toast.success("Petition submitted. It will appear publicly once the AGRF editorial team approves it at info@globerelations.org.");
       setForm({ title: "", creator_name: "", creator_email: "", category: "", target: "", summary: "", full_text: "", country: "" });
       fetchList();
-      window.setTimeout(() => {
-        window.location.href = `/petitions/${data.slug}`;
-      }, 600);
     } catch (err) {
       toast.error(err?.response?.data?.detail?.[0]?.msg || "Could not create petition.");
     } finally {
@@ -129,7 +126,7 @@ const Petitions = () => {
               <div className="text-[11px] tracking-[0.25em] uppercase text-[#009EDB] font-semibold">Sign a Petition</div>
               <h2 className="font-serif text-3xl md:text-4xl text-[#0b2c4a] mt-3">Active petitions</h2>
             </div>
-            <p className="max-w-md text-slate-600">Add your voice to ongoing campaigns. Petitions with 5,000+ signatures are automatically featured in the AGRF Newsroom.</p>
+            <p className="max-w-md text-slate-600">Add your voice to ongoing campaigns. Petitions with <span className="text-[#0b2c4a] font-semibold">5,000+ signatures</span> do not only reach policy makers — they are also featured on top media platforms around the world.</p>
           </div>
 
           {loadingList ? (

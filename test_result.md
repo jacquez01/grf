@@ -465,18 +465,30 @@ backend:
           agent: "testing"
           comment: "Regression testing completed successfully. All existing endpoints (GET /api/, POST /api/contact, POST /api/volunteer-application, POST /api/ambassador-application, POST /api/mentor-signup) continue to work correctly after petition endpoints addition."
 
+  - task: "Petition approval workflow"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "NEW AGRF petition approval workflow tested comprehensively. All 13 tests passed: (1) GET /api/petitions returns 3 seeded approved petitions with correct titles, signature counts (1000, 500, 1000), and status='approved', (2) POST /api/petitions creates pending petition with status='pending' and approval_token, (3) Pending petitions correctly hidden from public GET /api/petitions, (4) Pending petitions appear with ?include_pending=true, (5) GET /api/petitions/{pending_slug} returns 404, (6) POST /api/petitions/{pending_slug}/sign returns 404, (7) Wrong approval token returns 403, (8) Correct approval token returns 200 HTML with 'approved' text, (9) Approved petition now accessible with status='approved', (10) Can sign approved petition with signature_count=1, (11) Double-approval handled correctly, (12) Rejection workflow works - rejected petitions return 404, (13) All existing endpoints still work. Petition approval/rejection system fully functional with proper token validation, status management, and HTML responses."
+
 frontend:
   # No frontend testing performed as per instructions
 
 metadata:
   created_by: "testing_agent"
   version: "1.0"
-  test_sequence: 4
+  test_sequence: 5
   run_ui: false
 
 test_plan:
   current_focus:
-    - "All AGRF petition endpoints tested and verified including creation, signing, listing, and validation functionality"
+    - "NEW AGRF petition approval workflow tested and verified including status management, token validation, approval/rejection endpoints, and HTML responses"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
@@ -490,3 +502,5 @@ agent_communication:
       message: "Completed comprehensive testing of new AGRF backend endpoints. All 10 tests passed: (1) Root endpoint now has 3 emails in notify array, (2) Volunteer application submission with correct mailto format, (3) Volunteer validation for missing country, (4) Volunteer validation for invalid email, (5) Volunteer application listing, (6) Ambassador application submission with correct subject format, (7) Ambassador nomination with nominee_name in body, (8) Ambassador validation for missing track, (9) Ambassador application listing, (10) Regression testing of existing endpoints. All new volunteer-application and ambassador-application endpoints are working correctly with proper validation and formatting."
     - agent: "testing"
       message: "Completed comprehensive testing of new AGRF petition endpoints. All 13 tests passed: (1) Petition creation with correct response structure, (2) Unique slug generation for duplicate titles, (3) Petition listing sorted by signature_count desc, (4) Petition retrieval by slug, (5) 404 handling for nonexistent slugs, (6) First signature addition, (7) Duplicate signature detection, (8) Multiple signature handling, (9) Signature listing, (10) Feature threshold verification (NEWSROOM_FEATURE_THRESHOLD=5000), (11) Validation for missing title, (12) Validation for invalid email in signatures, (13) Regression testing of all existing endpoints. All petition endpoints are working correctly with proper validation, duplicate handling, and newsroom feature threshold logic."
+    - agent: "testing"
+      message: "Completed comprehensive testing of NEW AGRF petition approval workflow. All 13 tests passed: (1) GET /api/petitions returns 3 seeded approved petitions ('Protect Clean Drinking Water', 'Youth Inclusion in Nation Building and Policy Processes', 'More Focus on Youth Empowerment in America and Around the World') with correct signature counts (1000, 500, 1000) and status='approved', (2) POST /api/petitions creates pending petition with status='pending' and approval_token, (3) Pending petitions correctly hidden from public listing, (4) Pending petitions appear with ?include_pending=true, (5) Direct access to pending petitions returns 404, (6) Signing pending petitions returns 404, (7) Wrong approval token returns 403, (8) Correct approval token returns 200 HTML response with 'approved' text, (9) Approved petition becomes accessible with status='approved', (10) Can sign approved petition with signature_count=1, (11) Double-approval handled correctly, (12) Rejection workflow works - rejected petitions return 404, (13) All existing endpoints (GET /api/, POST /api/contact, POST /api/volunteer-application, POST /api/ambassador-application) continue working. The petition approval/rejection system is fully functional with proper token validation, status management, HTML responses, and complete workflow integrity."

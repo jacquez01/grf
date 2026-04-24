@@ -16,7 +16,7 @@ const FeaturedPetitions = () => {
   return (
     <div className="max-w-[1400px] mx-auto px-6 mt-8">
       <div className="border-l-4 border-[#009EDB] bg-[#f4f7fa] p-6 md:p-7">
-        <div className="text-[11px] tracking-[0.22em] uppercase text-[#009EDB] font-semibold">Trending Petitions · 5,000+ Signatures</div>
+        <div className="text-[11px] tracking-[0.22em] uppercase text-[#009EDB] font-semibold">Trending Petitions · 5,000+ Signatures reaching policy makers & global media</div>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.slice(0, 6).map((p) => (
             <Link to={`/petitions/${p.slug}`} key={p.id} className="group block bg-white border border-slate-200 p-5 hover:border-[#009EDB] transition-colors">

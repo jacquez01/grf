@@ -79,7 +79,7 @@ export const executiveBoard = [
   { id: 2, name: "Terryann Talbert", title: "First Secretary General", region: "United States", image: "https://images.unsplash.com/photo-1573167507387-6b4b98cb7c13", email: "info@globerelations.org", linkedin: "#" },
   { id: 3, name: "Anita Johnson", title: "Programs & Engagements", region: "United States", image: "https://images.unsplash.com/photo-1573164574572-cb89e39749b4", email: "info@globerelations.org", linkedin: "#" },
   { id: 4, name: "Jerry Owie", title: "National Project Lead & Project Director", region: "United States", image: "https://images.pexels.com/photos/1181435/pexels-photo-1181435.jpeg", email: "info@globerelations.org", linkedin: "#" },
-  { id: 5, name: "Vincent Idele-iyen", title: "European Director", region: "Europe", image: "https://images.unsplash.com/photo-1758518731296-20e24e58846f?crop=entropy&cs=srgb&fm=jpg&q=85", email: "info@globerelations.org", linkedin: "#" }
+  { id: 5, name: "Vincent Idele-iyen", title: "European Director", region: "Europe", image: "https://images.unsplash.com/photo-1517048676732-d65bc937f952", email: "info@globerelations.org", linkedin: "#" }
 ];
 
 export const whatWeDo = [

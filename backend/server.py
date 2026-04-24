@@ -141,7 +141,10 @@ class Petition(PetitionCreate):
     slug: str = ""
     signature_count: int = 0
     featured_in_newsroom: bool = False
+    status: str = "pending"  # pending | approved | rejected
+    approval_token: str = Field(default_factory=lambda: uuid.uuid4().hex)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    approved_at: Optional[datetime] = None
 
 
 class PetitionSignCreate(BaseModel):
@@ -338,23 +341,87 @@ async def create_petition(payload: PetitionCreate):
         slug = f"{base}-{i}"
     obj.slug = slug
     await db.petitions.insert_one(to_doc(obj))
+
+    public_url = os.environ.get("PUBLIC_APP_URL", "").rstrip("/") or "https://agrfus.org"
+    backend_api = os.environ.get("BACKEND_API_URL", "").rstrip("/") or f"{public_url}/api"
+    approve_link = f"{backend_api}/petitions/{obj.slug}/approve?token={obj.approval_token}"
+    reject_link = f"{backend_api}/petitions/{obj.slug}/reject?token={obj.approval_token}"
+
     body = (
-        f"New Petition Created\n\nTitle: {obj.title}\nCategory: {obj.category}\n"
+        f"NEW PETITION AWAITING APPROVAL\n\n"
+        f"Title: {obj.title}\nCategory: {obj.category}\n"
         f"Target: {obj.target}\nCreator: {obj.creator_name} <{obj.creator_email}>\n"
         f"Country: {obj.country or '(none)'}\n\nSummary:\n{obj.summary}\n\n"
-        f"Full text:\n{obj.full_text or '(none)'}\n\nShare link: /petitions/{obj.slug}\n"
-        f"Submission ID: {obj.id}\nTime (UTC): {obj.created_at.isoformat()}\n"
+        f"Full text:\n{obj.full_text or '(none)'}\n\n"
+        f"====== APPROVAL ACTIONS ======\n"
+        f"APPROVE (make live): {approve_link}\n"
+        f"REJECT:             {reject_link}\n"
+        f"Public page (after approval): {public_url}/petitions/{obj.slug}\n\n"
+        f"Submission ID: {obj.id}\nStatus: {obj.status}\n"
+        f"Time (UTC): {obj.created_at.isoformat()}\n"
     )
-    subject = f"[AGRF Petition] {obj.title}"
-    logging.info("Petition created id=%s slug=%s", obj.id, obj.slug)
-    # Fire notification via the standard helper so it shares same mailto behaviour if frontend uses it
-    SubmissionAck(id=obj.id, mailto=build_mailto(subject, body))
+    subject = f"[AGRF Petition — APPROVAL NEEDED] {obj.title}"
+    logging.info("Petition pending approval id=%s slug=%s", obj.id, obj.slug)
     return obj
 
 
+async def _moderate_petition(slug: str, token: str, new_status: str) -> dict:
+    doc = await db.petitions.find_one({"slug": slug})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Petition not found")
+    pet = Petition(**doc)
+    if pet.approval_token != token:
+        raise HTTPException(status_code=403, detail="Invalid approval token")
+    if pet.status == new_status:
+        return {"ok": True, "already": True, "status": pet.status, "slug": pet.slug}
+    update = {"status": new_status}
+    if new_status == "approved":
+        update["approved_at"] = datetime.now(timezone.utc).isoformat()
+    await db.petitions.update_one({"id": pet.id}, {"$set": update})
+    return {"ok": True, "already": False, "status": new_status, "slug": pet.slug}
+
+
+def _moderation_html(title: str, slug: str, status: str) -> str:
+    color = "#009EDB" if status == "approved" else "#b00020"
+    public_url = os.environ.get("PUBLIC_APP_URL", "").rstrip("/") or "https://agrfus.org"
+    return f"""<!doctype html><html><head><meta charset='utf-8'><title>Petition {status}</title>
+<style>body{{font-family:-apple-system,Segoe UI,Inter,sans-serif;background:#f4f7fa;margin:0;padding:60px 20px;color:#0b2c4a}}
+.card{{max-width:560px;margin:0 auto;background:#fff;border-top:6px solid {color};padding:40px;box-shadow:0 8px 32px rgba(11,44,74,.08)}}
+h1{{font-family:Georgia,serif;margin:0 0 8px;font-size:28px}}
+.eyebrow{{color:{color};font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}}
+a.btn{{display:inline-block;margin-top:24px;padding:12px 22px;background:{color};color:#fff;text-decoration:none;font-weight:600}}
+.muted{{color:#64748b;font-size:13px}}
+</style></head><body><div class='card'>
+<div class='eyebrow'>Petition {status}</div>
+<h1>{title}</h1>
+<p class='muted'>This petition has been <b>{status}</b>. {"It is now publicly visible on the AGRF website." if status == "approved" else "It will not appear publicly."}</p>
+<a class='btn' href='{public_url}/petitions/{slug}'>View on site</a>
+</div></body></html>"""
+
+
+@api_router.get("/petitions/{slug}/approve")
+async def approve_petition(slug: str, token: str):
+    res = await _moderate_petition(slug, token, "approved")
+    doc = await db.petitions.find_one({"slug": slug})
+    title = (doc or {}).get("title", slug)
+    from fastapi.responses import HTMLResponse
+    return HTMLResponse(content=_moderation_html(title, res["slug"], "approved"))
+
+
+@api_router.get("/petitions/{slug}/reject")
+async def reject_petition(slug: str, token: str):
+    res = await _moderate_petition(slug, token, "rejected")
+    doc = await db.petitions.find_one({"slug": slug})
+    title = (doc or {}).get("title", slug)
+    from fastapi.responses import HTMLResponse
+    return HTMLResponse(content=_moderation_html(title, res["slug"], "rejected"))
+
+
 @api_router.get("/petitions", response_model=List[Petition])
-async def list_petitions(featured: Optional[bool] = None):
-    query = {}
+async def list_petitions(featured: Optional[bool] = None, include_pending: bool = False):
+    query: dict = {}
+    if not include_pending:
+        query["status"] = "approved"
     if featured is not None:
         query["featured_in_newsroom"] = featured
     docs = await db.petitions.find(query).sort("signature_count", -1).to_list(500)
@@ -366,7 +433,10 @@ async def get_petition(slug: str):
     doc = await db.petitions.find_one({"slug": slug})
     if not doc:
         raise HTTPException(status_code=404, detail="Petition not found")
-    return Petition(**doc)
+    pet = Petition(**doc)
+    if pet.status != "approved":
+        raise HTTPException(status_code=404, detail="Petition not found")
+    return pet
 
 
 @api_router.post("/petitions/{slug}/sign")
@@ -375,6 +445,8 @@ async def sign_petition(slug: str, payload: PetitionSignCreate):
     if not doc:
         raise HTTPException(status_code=404, detail="Petition not found")
     pet = Petition(**doc)
+    if pet.status != "approved":
+        raise HTTPException(status_code=404, detail="Petition not found")
     # Prevent duplicate signatures by email on the same petition
     existing = await db.petition_signatures.find_one({"petition_id": pet.id, "email": payload.email})
     if existing:

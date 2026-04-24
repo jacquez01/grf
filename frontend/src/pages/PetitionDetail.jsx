@@ -67,7 +67,7 @@ const PetitionDetail = () => {
       } else {
         toast.success("Thank you for signing!");
         if (data.featured_in_newsroom && !petition?.featured_in_newsroom) {
-          toast.success("5,000+ signatures reached — now featured in the Newsroom!");
+          toast.success("5,000+ signatures reached — this petition will reach policy makers and top global media platforms!");
         }
       }
       setPetition((p) => (p ? { ...p, signature_count: data.signature_count, featured_in_newsroom: data.featured_in_newsroom } : p));
@@ -141,7 +141,7 @@ const PetitionDetail = () => {
                 <div className="bg-[#0b2c4a] text-white p-6">
                   <div className="text-[11px] tracking-[0.22em] uppercase text-[#7cc3ef] font-semibold flex items-center gap-2"><Users className="w-4 h-4" /> Signatures</div>
                   <div className="font-serif text-5xl mt-2">{petition.signature_count.toLocaleString()}</div>
-                  <div className="text-white/75 text-sm mt-1">{petition.featured_in_newsroom ? "Featured in the AGRF Newsroom" : "Goal: 5,000 to be featured in the Newsroom"}</div>
+                  <div className="text-white/75 text-sm mt-1">{petition.featured_in_newsroom ? "Reaching policy makers and featured on top media platforms worldwide" : "Goal: 5,000 — to reach policy makers and top global media"}</div>
                   <div className="mt-4 h-2 bg-white/10">
                     <div className="h-full bg-[#009EDB]" style={{ width: `${Math.min(100, (petition.signature_count / 5000) * 100)}%` }} />
                   </div>
