@@ -79,7 +79,7 @@ export const executiveBoard = [
   { id: 2, name: "Terryann Talbert", title: "First Secretary General", region: "United States", image: "https://images.unsplash.com/photo-1573167507387-6b4b98cb7c13", email: "info@globerelations.org", linkedin: "#" },
   { id: 3, name: "Anita Johnson", title: "Programs & Engagements", region: "United States", image: "https://images.unsplash.com/photo-1573164574572-cb89e39749b4", email: "info@globerelations.org", linkedin: "#" },
   { id: 4, name: "Jerry Owie", title: "National Project Lead & Project Director", region: "United States", image: "https://images.pexels.com/photos/1181435/pexels-photo-1181435.jpeg", email: "info@globerelations.org", linkedin: "#" },
-  { id: 5, name: "Vincent Idele-iyen", title: "European Director", region: "Europe", image: "https://images.pexels.com/photos/7433853/pexels-photo-7433853.jpeg", email: "info@globerelations.org", linkedin: "#" }
+  { id: 5, name: "Vincent Idele-iyen", title: "European Director", region: "Europe", image: "https://images.unsplash.com/photo-1758518731296-20e24e58846f?crop=entropy&cs=srgb&fm=jpg&q=85", email: "info@globerelations.org", linkedin: "#" }
 ];
 
 export const whatWeDo = [
@@ -88,7 +88,7 @@ export const whatWeDo = [
     title: "Cultural Diplomacy",
     short: "Fostering intercultural dialogue through arts, heritage and exchange.",
     body: "AGRF designs cultural diplomacy initiatives that connect artists, scholars and civic leaders across borders. We support heritage projects, museum practice and provenance research to strengthen societal resilience and shared memory.",
-    image: "https://images.pexels.com/photos/29241234/pexels-photo-29241234.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    image: "https://images.unsplash.com/photo-1704477263453-bd124e991e1b?crop=entropy&cs=srgb&fm=jpg&q=85"
   },
   {
     id: "public-diplomacy",
@@ -300,6 +300,7 @@ export const navItems = [
     { label: "Youth Succeed Center", href: "/youth-succeed-center" },
     { label: "Cultural Exchange", href: "/cultural-exchange" },
     { label: "America National Youth Council", href: "/america-national-youth-council" },
+    { label: "Global Petition Platform", href: "/petitions" },
     { label: "Ensuring Basic Human Needs", href: "#programs" },
     { label: "Creating Income", href: "#programs" },
     { label: "Providing Stable Housing", href: "#programs" },
@@ -545,3 +546,63 @@ export const anyc = {
   ],
   closing: "Together, we build a better America and impact a better world. The America National Youth Council stands as a platform for collaboration, leadership and impact — where young people come together to shape the future."
 };
+
+export const petitionPage = {
+  heroImage: "https://images.pexels.com/photos/6257199/pexels-photo-6257199.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  eyebrow: "A Civic Action Initiative by AGRF",
+  title: "Global Petition Platform",
+  lead: "Every voice matters. Sign petitions, start petitions, and help global leaders hear the concerns that shape lives, communities and future generations.",
+  issues: [
+    "Human rights and social justice",
+    "Youth empowerment and inclusion",
+    "Violence, displacement and humanitarian crises",
+    "Education and economic opportunities",
+    "Public health and community development",
+    "Environmental sustainability"
+  ],
+  doesWhat: [
+    "Sign petitions addressing urgent social, humanitarian, and global issues",
+    "Raise awareness on causes that need immediate attention",
+    "Support advocacy efforts that influence policy and decision-making",
+    "Join a global community committed to justice, equity and positive change"
+  ],
+  whyItMatters: [
+    "Increased public awareness",
+    "Stronger advocacy efforts",
+    "Greater accountability from leaders and institutions",
+    "Collective action that drives real impact"
+  ]
+};
+
+export const newsroomAds = [
+  {
+    id: "public-diplomat",
+    tone: "navy",
+    eyebrow: "Ambassador Program",
+    title: "Become a Public Diplomat",
+    body: "Join AGRF as a Global Youth Voice Ambassador or Public Diplomat. Earn your certificate at the America Global Citizen College.",
+    cta: "Apply Now",
+    href: "/#ambassador",
+    image: "https://images.unsplash.com/photo-1715610258704-e8f9f5710fe0"
+  },
+  {
+    id: "anyc",
+    tone: "blue",
+    eyebrow: "National Youth Council",
+    title: "Join the America National Youth Council",
+    body: "Stand with young Americans shaping policy, leadership and community change from coast to coast.",
+    cta: "Get Involved",
+    href: "/america-national-youth-council",
+    image: "https://images.pexels.com/photos/8846678/pexels-photo-8846678.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+  },
+  {
+    id: "beauty-color",
+    tone: "light",
+    eyebrow: "Volunteer Movement",
+    title: "Add more beauty and color to America and the world",
+    body: "Volunteer with AGRF. Bring your creativity, care and culture to programs in the US, Europe and Africa.",
+    cta: "Volunteer",
+    href: "/careers",
+    image: "https://images.unsplash.com/photo-1591197172062-c718f82aba20"
+  }
+];

@@ -357,18 +357,126 @@ backend:
           agent: "testing"
           comment: "Regression testing completed successfully. All existing endpoints (contact, proposal, mentor-signup) continue to work correctly after new feature additions."
 
+  - task: "Petition creation endpoint"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "POST /api/petitions tested successfully. Creates petitions with correct response structure including id, slug, signature_count=0, featured_in_newsroom=false, and all required fields."
+
+  - task: "Petition unique slug generation"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Unique slug logic tested successfully. Duplicate titles generate different slugs (e.g., 'protect-clean-drinking-water-2') ensuring no conflicts."
+
+  - task: "Petition listing endpoint"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "GET /api/petitions tested successfully. Returns list of petitions sorted by signature_count descending as required."
+
+  - task: "Petition retrieval by slug"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "GET /api/petitions/{slug} tested successfully. Returns correct petition data for valid slugs and 404 for nonexistent slugs."
+
+  - task: "Petition signing functionality"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "POST /api/petitions/{slug}/sign tested successfully. Correctly handles first signatures, duplicate email detection (returns duplicate=true), and increments signature_count for unique emails."
+
+  - task: "Petition signatures listing"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "GET /api/petitions/{slug}/signatures tested successfully. Returns list of signatures with correct structure including id, name, email, petition_id, and created_at fields."
+
+  - task: "Petition newsroom feature threshold"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "NEWSROOM_FEATURE_THRESHOLD = 5000 verified in code. Tested with 7 signatures - featured_in_newsroom remains false until threshold is reached."
+
+  - task: "Petition validation"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Petition validation tested successfully. Returns 422 for missing required fields (title) and invalid email formats in signatures as expected."
+
+  - task: "Petition endpoints regression testing"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Regression testing completed successfully. All existing endpoints (GET /api/, POST /api/contact, POST /api/volunteer-application, POST /api/ambassador-application, POST /api/mentor-signup) continue to work correctly after petition endpoints addition."
+
 frontend:
   # No frontend testing performed as per instructions
 
 metadata:
   created_by: "testing_agent"
   version: "1.0"
-  test_sequence: 3
+  test_sequence: 4
   run_ui: false
 
 test_plan:
   current_focus:
-    - "All new AGRF backend endpoints tested and verified including volunteer-application and ambassador-application functionality"
+    - "All AGRF petition endpoints tested and verified including creation, signing, listing, and validation functionality"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
@@ -380,3 +488,5 @@ agent_communication:
       message: "Completed testing of new mentor-signup endpoints. All 4 new mentor-signup related tests passed: full mentor data submission, minimal volunteer data submission, input validation (missing role and invalid email), and mentor signup listing. The mentor-signup endpoint correctly formats mailto links with '[AGRF Youth Succeed]' subject and includes role and center information in the body. All existing endpoints continue to work correctly. Total: 12/12 tests passed."
     - agent: "testing"
       message: "Completed comprehensive testing of new AGRF backend endpoints. All 10 tests passed: (1) Root endpoint now has 3 emails in notify array, (2) Volunteer application submission with correct mailto format, (3) Volunteer validation for missing country, (4) Volunteer validation for invalid email, (5) Volunteer application listing, (6) Ambassador application submission with correct subject format, (7) Ambassador nomination with nominee_name in body, (8) Ambassador validation for missing track, (9) Ambassador application listing, (10) Regression testing of existing endpoints. All new volunteer-application and ambassador-application endpoints are working correctly with proper validation and formatting."
+    - agent: "testing"
+      message: "Completed comprehensive testing of new AGRF petition endpoints. All 13 tests passed: (1) Petition creation with correct response structure, (2) Unique slug generation for duplicate titles, (3) Petition listing sorted by signature_count desc, (4) Petition retrieval by slug, (5) 404 handling for nonexistent slugs, (6) First signature addition, (7) Duplicate signature detection, (8) Multiple signature handling, (9) Signature listing, (10) Feature threshold verification (NEWSROOM_FEATURE_THRESHOLD=5000), (11) Validation for missing title, (12) Validation for invalid email in signatures, (13) Regression testing of all existing endpoints. All petition endpoints are working correctly with proper validation, duplicate handling, and newsroom feature threshold logic."
