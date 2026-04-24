@@ -67,7 +67,7 @@ const PetitionDetail = () => {
       } else {
         toast.success("Thank you for signing!");
         if (data.featured_in_newsroom && !petition?.featured_in_newsroom) {
-          toast.success("5,000+ signatures reached \u2014 now featured in the Newsroom!");
+          toast.success("5,000+ signatures reached — now featured in the Newsroom!");
         }
       }
       setPetition((p) => (p ? { ...p, signature_count: data.signature_count, featured_in_newsroom: data.featured_in_newsroom } : p));
@@ -96,7 +96,7 @@ const PetitionDetail = () => {
       </div>
 
       {loading ? (
-        <div className="max-w-[1400px] mx-auto px-6 py-24 text-slate-500">Loading petition\u2026</div>
+        <div className="max-w-[1400px] mx-auto px-6 py-24 text-slate-500">Loading petition…</div>
       ) : !petition ? (
         <div className="max-w-[1400px] mx-auto px-6 py-24 text-center">
           <Megaphone className="w-10 h-10 text-[#009EDB] mx-auto" />
@@ -113,7 +113,7 @@ const PetitionDetail = () => {
                   <Globe2 className="w-3.5 h-3.5" /> {petition.category}
                 </div>
                 <h1 className="font-serif text-3xl md:text-5xl text-[#0b2c4a] mt-3 leading-[1.1]">{petition.title}</h1>
-                <div className="mt-3 text-slate-600">Addressed to: <span className="text-[#0b2c4a] font-semibold">{petition.target}</span>{petition.country ? ` \u00b7 ${petition.country}` : ""}</div>
+                <div className="mt-3 text-slate-600">Addressed to: <span className="text-[#0b2c4a] font-semibold">{petition.target}</span>{petition.country ? ` · ${petition.country}` : ""}</div>
                 <p className="mt-6 text-[17px] leading-[1.8] text-slate-700 whitespace-pre-line">{petition.summary}</p>
                 {petition.full_text ? (
                   <p className="mt-4 text-[16px] leading-[1.8] text-slate-700 whitespace-pre-line">{petition.full_text}</p>
@@ -128,7 +128,7 @@ const PetitionDetail = () => {
                         <li key={s.id} className="py-3 flex items-center justify-between text-sm">
                           <div>
                             <span className="text-[#0b2c4a] font-semibold">{s.name}</span>
-                            {s.country ? <span className="text-slate-500"> \u00b7 {s.country}</span> : null}
+                            {s.country ? <span className="text-slate-500"> · {s.country}</span> : null}
                           </div>
                           <div className="text-slate-400 text-[12px]">{new Date(s.created_at).toLocaleDateString()}</div>
                         </li>
@@ -161,7 +161,7 @@ const PetitionDetail = () => {
                     <Input value={form.country} onChange={(e) => setForm({ ...form, country: e.target.value })} placeholder="Country" className="rounded-none border-slate-300 focus-visible:ring-[#009EDB]" />
                     <Textarea value={form.comment} onChange={(e) => setForm({ ...form, comment: e.target.value })} placeholder="Optional note to leaders" className="rounded-none border-slate-300 focus-visible:ring-[#009EDB] min-h-[80px]" />
                   </div>
-                  <Button type="submit" disabled={signing} className="mt-4 w-full rounded-none bg-[#009EDB] hover:bg-[#0086b8] text-white h-11 font-semibold">{signing ? "Signing\u2026" : "Sign Petition"}</Button>
+                  <Button type="submit" disabled={signing} className="mt-4 w-full rounded-none bg-[#009EDB] hover:bg-[#0086b8] text-white h-11 font-semibold">{signing ? "Signing…" : "Sign Petition"}</Button>
                   <div className="mt-3 text-[11px] text-slate-500">Your email is kept private and used only to verify unique signatures.</div>
                 </form>
               </aside>

@@ -133,7 +133,7 @@ const Petitions = () => {
           </div>
 
           {loadingList ? (
-            <div className="text-slate-500 py-8">Loading petitions\u2026</div>
+            <div className="text-slate-500 py-8">Loading petitions…</div>
           ) : list.length === 0 ? (
             <div className="bg-white border border-dashed border-slate-300 p-10 text-center">
               <Megaphone className="w-8 h-8 text-[#009EDB] mx-auto" />
@@ -218,7 +218,7 @@ const Petitions = () => {
               <Textarea value={form.full_text} onChange={(e) => update("full_text", e.target.value)} placeholder="Optional longer context, data, personal story, proposed action..." className="rounded-none border-slate-300 focus-visible:ring-[#009EDB] mt-1 bg-white min-h-[120px]" />
             </div>
             <div className="sm:col-span-2">
-              <Button type="submit" disabled={creating} className="rounded-none bg-[#009EDB] hover:bg-[#0086b8] text-white h-12 px-6 font-semibold"><PenLine className="w-4 h-4 mr-2" />{creating ? "Creating\u2026" : "Create Petition"}</Button>
+              <Button type="submit" disabled={creating} className="rounded-none bg-[#009EDB] hover:bg-[#0086b8] text-white h-12 px-6 font-semibold"><PenLine className="w-4 h-4 mr-2" />{creating ? "Creating…" : "Create Petition"}</Button>
             </div>
           </form>
         </div>
@@ -227,7 +227,7 @@ const Petitions = () => {
       <section className="bg-[#0b2c4a] text-white py-16">
         <div className="max-w-[1000px] mx-auto px-6 text-center">
           <div className="text-[11px] tracking-[0.25em] uppercase text-[#7cc3ef] font-semibold">Together, We Speak. Together, We Act.</div>
-          <p className="mt-5 font-serif text-2xl md:text-3xl leading-snug">Through collective voices and unified action, AGRF is building a platform where global concerns are heard \u2014 and addressed.</p>
+          <p className="mt-5 font-serif text-2xl md:text-3xl leading-snug">Through collective voices and unified action, AGRF is building a platform where global concerns are heard — and addressed.</p>
         </div>
       </section>
 
