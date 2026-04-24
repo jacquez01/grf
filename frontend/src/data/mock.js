@@ -203,7 +203,7 @@ export const partners = [
 export const LOGO_URL = "https://customer-assets.emergentagent.com/job_agrf-global-bridge/artifacts/vs4dhuee_cropped_circle_image%20%2810%29.png";
 
 export const whereWeWork = [
-  { region: "United States", flag: "US", blurb: "Active in Washington D.C., New York, New Jersey, Maryland and across the United States — housing, healthcare, youth, crisis response and community leadership.", image: "https://images.unsplash.com/photo-1521790797524-b2497295b8a0" },
+  { region: "United States", flag: "US", blurb: "Active in Washington D.C., New York, New Jersey, Maryland and across the United States — housing, healthcare, youth, crisis response and community leadership.", image: "https://images.pexels.com/photos/6257199/pexels-photo-6257199.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
   { region: "Canada", flag: "CA", blurb: "Cross-border cultural exchanges, newcomer integration and skilled-worker apprenticeships.", image: "https://images.pexels.com/photos/36729916/pexels-photo-36729916.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" },
   { region: "Europe", flag: "EU", blurb: "Heritage protection, migration dialogue and intercultural policy with partners in Italy, Germany, Netherlands and Switzerland.", image: "https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?crop=entropy&cs=srgb&fm=jpg&q=85" },
   { region: "Africa", flag: "AF", blurb: "Clean water, biodiversity, entrepreneurship and youth empowerment across Sub-Saharan communities.", image: "https://images.pexels.com/photos/28101461/pexels-photo-28101461.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" }
@@ -283,17 +283,47 @@ export const newsPosts = [
 ];
 
 export const navItems = [
-  { label: "About", anchor: "#about", children: ["Who We Are", "Leadership", "History", "Partners"] },
-  { label: "What We Do", anchor: "#what-we-do", children: ["Cultural Diplomacy", "Public Diplomacy", "Arts & Heritage", "Emergency Response", "Biodiversity & Green Energy"] },
-  { label: "Programs", anchor: "#programs", children: ["Basic Human Needs", "Creating Income", "Stable Housing", "Empowering Communities"] },
-  { label: "Where We Work", anchor: "#where-we-work", children: ["United States", "Canada", "Europe", "Africa"] },
-  { label: "Film & Media", anchor: "#film-media", children: ["Featured Productions", "Immigration Documentary"] },
-  { label: "Youth Succeed", anchor: "/youth-succeed-center", children: ["Open House Project", "Mentorship", "Talent Development", "Get Involved"] },
-  { label: "Cultural Exchange", anchor: "/cultural-exchange", children: ["Overview", "Mentorship", "Global Reach", "Apply"] },
-  { label: "Academic", anchor: "#academic", children: ["America Global Citizen College"] },
-  { label: "News", anchor: "#news", children: ["Stories", "Publications"] },
-  { label: "Careers", anchor: "/careers", children: ["Volunteer Application", "Open Roles"] },
-  { label: "Get Involved", anchor: "#get-involved", children: ["Volunteer", "Partner", "Ambassador"] }
+  { label: "About", anchor: "#about", children: [
+    { label: "Welcome", href: "#about" },
+    { label: "Leadership", href: "#leadership" },
+    { label: "Partners", href: "#partners" },
+    { label: "Academic — AGCC", href: "#academic" }
+  ]},
+  { label: "What We Do", anchor: "#what-we-do", children: [
+    { label: "Cultural Diplomacy", href: "#what-we-do" },
+    { label: "Public Diplomacy", href: "#what-we-do" },
+    { label: "Arts & Heritage", href: "#what-we-do" },
+    { label: "Emergency Response", href: "#what-we-do" },
+    { label: "Biodiversity & Green Energy", href: "#what-we-do" }
+  ]},
+  { label: "Programs", anchor: "#programs", children: [
+    { label: "Youth Succeed Center", href: "/youth-succeed-center" },
+    { label: "Cultural Exchange", href: "/cultural-exchange" },
+    { label: "America National Youth Council", href: "/america-national-youth-council" },
+    { label: "Ensuring Basic Human Needs", href: "#programs" },
+    { label: "Creating Income", href: "#programs" },
+    { label: "Providing Stable Housing", href: "#programs" },
+    { label: "Empowering Communities", href: "#programs" }
+  ]},
+  { label: "Where We Work", anchor: "#where-we-work", children: [
+    { label: "United States", href: "#where-we-work" },
+    { label: "Canada", href: "#where-we-work" },
+    { label: "Europe", href: "#where-we-work" },
+    { label: "Africa", href: "#where-we-work" }
+  ]},
+  { label: "Media", anchor: "#film-media", children: [
+    { label: "Film & Media", href: "#film-media" },
+    { label: "News & Stories", href: "#news" },
+    { label: "Featured Productions", href: "#film-media" }
+  ]},
+  { label: "Careers", anchor: "/careers", children: [
+    { label: "Volunteer Application", href: "/careers" }
+  ]},
+  { label: "Get Involved", anchor: "#get-involved", children: [
+    { label: "Partner With Us", href: "#proposal" },
+    { label: "Become an Ambassador", href: "#ambassador" },
+    { label: "Contact Us", href: "#contact" }
+  ]}
 ];
 
 export const stats = [
@@ -489,4 +519,29 @@ export const ambassadorFeature = {
   ],
   tagline: "Be a voice for global change.",
   emails: ["info@globerelations.org", "info@grfus.org"]
+};
+
+export const anyc = {
+  heroImage: "https://images.pexels.com/photos/8846678/pexels-photo-8846678.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+  eyebrow: "A Program of AGRF",
+  title: "America National Youth Council",
+  lead: "Empowering young people to actively participate in shaping a better, more inclusive American society — through strategic partnerships, leadership development and civic engagement.",
+  overview: "The America National Youth Council (ANYC) is a flagship initiative of the America Global Relations Foundation (AGRF), dedicated to empowering young people to actively participate in shaping a better, more inclusive American society. Through strategic partnerships, leadership development and civic engagement, the Council provides a platform for youth voices to be heard, respected and integrated into national conversations and solutions.",
+  mission: "To unite and empower youth across the United States to contribute meaningfully to nation-building through leadership, advocacy and community-driven action.",
+  vision: "A future where young people are actively engaged in governance, policy and community development — driving progress, innovation and unity across America.",
+  pillars: [
+    { title: "Youth Partnerships for Change", body: "We collaborate with youth organizations, institutions and stakeholders to promote initiatives that strengthen communities and foster national development." },
+    { title: "Civic Engagement & Leadership", body: "We equip young people with the knowledge and skills to engage in civic processes, leadership roles and policy discussions that shape the future of the nation." },
+    { title: "Advocacy & Awareness", body: "We amplify youth voices on critical social issues, encouraging active participation in creating solutions that promote equity, justice and opportunity for all." },
+    { title: "Capacity Building & Mentorship", body: "Through mentorship programs, workshops and leadership training, we prepare youth to become effective leaders and changemakers." },
+    { title: "Community Impact Initiatives", body: "We support youth-led projects that address real challenges within communities, fostering innovation, service and collaboration." }
+  ],
+  whyItMatters: [
+    "Be heard and represented",
+    "Contribute to meaningful change",
+    "Develop leadership and life skills",
+    "Build networks and partnerships",
+    "Promote unity and shared progress"
+  ],
+  closing: "Together, we build a better America and impact a better world. The America National Youth Council stands as a platform for collaboration, leadership and impact — where young people come together to shape the future."
 };

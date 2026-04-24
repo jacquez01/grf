@@ -35,9 +35,11 @@ const Footer = () => {
             <div key={n.label}>
               <div className="text-[11px] tracking-[0.22em] uppercase text-[#7cc3ef] font-semibold">{n.label}</div>
               <ul className="mt-3 space-y-2 text-sm text-white/75">
-                {n.children.slice(0, 4).map((c) => (
-                  <li key={c}><a href={n.anchor} className="hover:text-white">{c}</a></li>
-                ))}
+                {n.children.slice(0, 4).map((c) => {
+                  const href = typeof c === "string" ? n.anchor : c.href;
+                  const label = typeof c === "string" ? c : c.label;
+                  return <li key={label}><a href={href} className="hover:text-white">{label}</a></li>;
+                })}
               </ul>
             </div>
           ))}

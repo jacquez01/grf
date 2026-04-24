@@ -22,6 +22,7 @@ import Footer from "./components/site/Footer";
 import YouthSucceedCenter from "./pages/YouthSucceedCenter";
 import Careers from "./pages/Careers";
 import CulturalExchange from "./pages/CulturalExchange";
+import AmericaNationalYouthCouncil from "./pages/AmericaNationalYouthCouncil";
 
 const Home = () => {
   return (
@@ -56,6 +57,7 @@ function App() {
           <Route path="/youth-succeed-center" element={<YouthSucceedCenter />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/cultural-exchange" element={<CulturalExchange />} />
+          <Route path="/america-national-youth-council" element={<AmericaNationalYouthCouncil />} />
         </Routes>
       </BrowserRouter>
     </div>
